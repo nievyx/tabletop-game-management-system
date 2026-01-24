@@ -1,7 +1,7 @@
 # Databases-Assignment
 
 ## File Structure
-```
+```py
 databases-assignment/
 ├── database/
 │   ├── schema.sql
@@ -13,7 +13,7 @@ databases-assignment/
 ├── demo/
 │   └── demo.py               # CLI CRUD demo
 │
-└── api/
+├── api/
 │   ├── main.py               # FastAPI entry point
 │   ├── models.py             # Pydantic request/response schemas
 │   └── routes.py             # endpoints
@@ -24,3 +24,18 @@ databases-assignment/
 └── .gitignore      
 
 ```
+<details>
+<summary>Toggle optional Java structure<strong> 
+</strong></summary>
+
+### Optional Java Demo
+```java
+└── java_demo/
+    ├── README.md
+    ├── pom.xml
+    └── src/
+        └── main/
+            └── java/
+                └── Demo.java
+```
+</details>
