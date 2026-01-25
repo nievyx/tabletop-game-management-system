@@ -5,3 +5,5 @@ database/*.db
 .venv/
 venv/
 .idea
+
+.db
