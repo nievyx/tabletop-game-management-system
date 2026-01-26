@@ -14,18 +14,24 @@ CREATE TABLE auth_events (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE profiles ()
+CREATE TABLE profiles (
+    profile_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    display_name TEXT NOT NULL, -- Displays names not unique, can be shared accross muliple accounts
+    created_at DATE NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 
-CREATE TABLE classes ()
+CREATE TABLE classes (class_id, name, description)
 
-CREATE TABLE characters ()
+CREATE TABLE characters (character_id, profile_id, class_id, level)
 
-CREATE TABLE quests ()
+CREATE TABLE quests (quest_id, title, difficulty)
 
-CREATE TABLE character_quests ()
+CREATE TABLE character_quests (character_id, quest_id, status, started_at, completed_at)
 
-CREATE TABLE asset_types ()
+CREATE TABLE asset_types (asset_type_id, name)
 
-CREATE TABLE assets ()
+CREATE TABLE assets (asset_id, title, asset_type_id)
 
-CREATE TABLE licenses ()
+CREATE TABLE licenses (license_id, user_id, asset_id, status, issued_at, expires_at)
