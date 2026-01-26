@@ -22,16 +22,48 @@ CREATE TABLE profiles (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE classes (class_id, name, description)
+CREATE TABLE classes (
+    class_id, 
+    name, 
+    description)
 
-CREATE TABLE characters (character_id, profile_id, class_id, level)
+CREATE TABLE characters (
+    character_id, 
+    profile_id, 
+    class_id, 
+    level
+);
 
-CREATE TABLE quests (quest_id, title, difficulty)
+CREATE TABLE quests (
+    quest_id, 
+    title, 
+    difficulty
+);
 
-CREATE TABLE character_quests (character_id, quest_id, status, started_at, completed_at)
+CREATE TABLE character_quests (
+    character_id, 
+    quest_id, 
+    status, 
+    started_at, 
+    completed_at
+);
 
-CREATE TABLE asset_types (asset_type_id, name)
+CREATE TABLE asset_types (
+    asset_type_id, 
+    name
+);
 
-CREATE TABLE assets (asset_id, title, asset_type_id)
+CREATE TABLE assets (
+    asset_id, 
+    title,
+    asset_type_id
+);
 
-CREATE TABLE licenses (license_id, user_id, asset_id, status, issued_at, expires_at)
+CREATE TABLE licenses (
+    license_id, 
+    user_id, 
+    asset_id, 
+    status, 
+    issued_at, 
+    expires_at
+);
