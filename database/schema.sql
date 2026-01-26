@@ -1,3 +1,5 @@
+PRAGMA foreign_keys = ON;
+
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT NOT NULL UNIQUE,
@@ -38,35 +40,55 @@ CREATE TABLE characters (
 );
 
 CREATE TABLE quests (
-    quest_id, 
-    title, 
-    difficulty
+    quest_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL UNIQUE, 
+    difficulty TEXT NOT NULL CHECK (difficulty IN ('Easy', 'Medium','Hard'))
+    -- Difficulty levels stored as a constriant for simplicity.
+    -- ( This could be refactored into lookup table if more difficulty setting introduced  )
 );
 
 CREATE TABLE character_quests (
-    character_id, 
-    quest_id, 
-    status, 
-    started_at, 
-    completed_at
+    character_id INTEGER NOT NULL, 
+    quest_id INTEGER NOT NULL, 
+    status TEXT NOT NULL CHECK (status IN ('Completed', 'In Progress')),
+    started_at DATE NOT NULL, 
+    completed_at DATE, -- NULL when in progress
+    PRIMARY KEY (character_id, quest_id),
+    CHECK (
+        (status = 'In Progress' AND completed_at IS NULL)
+        OR
+        (status = 'Completed' AND completed_at IS NOT NULL)
+    ),
+    FOREIGN KEY (character_id) REFERENCES characters(character_id),
+    FOREIGN KEY (quest_id) REFERENCES quests(quest_id)
 );
 
 CREATE TABLE asset_types (
-    asset_type_id, 
-    name
+    asset_type_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    name TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE assets (
-    asset_id, 
-    title,
-    asset_type_id
+    asset_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL UNIQUE,
+    asset_type_id INTEGER NOT NULL,
+    FOREIGN KEY (asset_type_id) REFERENCES asset_types(asset_type_id)
 );
 
 CREATE TABLE licenses (
-    license_id, 
-    user_id, 
-    asset_id, 
-    status, 
-    issued_at, 
-    expires_at
+    license_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    asset_id INTEGER NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('Active', 'Expired')),
+    issued_at DATE NOT NULL,
+    expires_at DATE,
+    CHECK (
+        (status = 'Active' AND expires_at IS NULL)
+        OR
+        (status = 'Expired' AND expires_at IS NOT NULL)
+    ),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (asset_id) REFERENCES assets(asset_id),
+    UNIQUE (user_id, asset_id) -- Prevents a user from having duplicate licenses
+
 );
