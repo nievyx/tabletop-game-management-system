@@ -14,3 +14,18 @@ CREATE TABLE auth_events (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+CREATE TABLE profiles ()
+
+CREATE TABLE classes ()
+
+CREATE TABLE characters ()
+
+CREATE TABLE quests ()
+
+CREATE TABLE character_quests ()
+
+CREATE TABLE asset_types ()
+
+CREATE TABLE assets ()
+
+CREATE TABLE licenses ()
