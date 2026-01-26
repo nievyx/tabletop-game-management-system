@@ -1,5 +1,9 @@
 # Databases-Assignment
 
+Relational database + CRUD demo REST API wrapper
+
+> seed.sql setup with a space themed tabletop game alongside a DRM platform
+
 ## File Structure
 ```py
 databases-assignment/
