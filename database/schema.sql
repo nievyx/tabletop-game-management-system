@@ -23,15 +23,18 @@ CREATE TABLE profiles (
 );
 
 CREATE TABLE classes (
-    class_id, 
-    name, 
-    description)
+    class_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    name TEXT NOT NULL UNIQUE, 
+    description TEXT
+);
 
 CREATE TABLE characters (
-    character_id, 
-    profile_id, 
-    class_id, 
-    level
+    character_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    profile_id INTEGER NOT NULL, 
+    class_id INTEGER NOT NULL, 
+    level INTEGER NOT NUll DEFAULT 1 CHECK (level >= 1), -- Characters start at level 1 (Fail Safe)
+    FOREIGN KEY (profile_id) REFERENCES profiles(profile_id),
+    FOREIGN KEY (class_id) REFERENCES classes(class_id) 
 );
 
 CREATE TABLE quests (
