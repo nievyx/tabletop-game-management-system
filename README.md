@@ -16,7 +16,8 @@ databases-assignment/
 │   └── __init__.py 
 │
 ├── demo/
-│   └── demo.py               # CLI CRUD demo
+│   ├── demo.py               # CLI CRUD demo
+│   └── test_db.py
 │
 ├── api/
 │   ├── main.py               # FastAPI entry point
