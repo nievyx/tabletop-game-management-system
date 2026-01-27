@@ -27,6 +27,7 @@ databases-assignment/
 │
 ├── README.md
 ├── pyproject.toml
+├── requirements.txt # Runtime dependies (pip/venv)
 ├── .env.example
 └── .gitignore      
 
