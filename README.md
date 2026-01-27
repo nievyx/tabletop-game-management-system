@@ -12,7 +12,8 @@ databases-assignment/
 │   ├── seed.sql
 │   ├── reset_db.py
 │   ├── db.py                 # connection + query helpers
-│   └── app.db                # Ignored by git
+│   ├── app.db                # Ignored by git
+│   └── __init__.py 
 │
 ├── demo/
 │   └── demo.py               # CLI CRUD demo
@@ -20,7 +21,8 @@ databases-assignment/
 ├── api/
 │   ├── main.py               # FastAPI entry point
 │   ├── models.py             # Pydantic request/response schemas
-│   └── routes.py             # endpoints
+│   ├─  routes.py             # endpoints
+│   └── __init__.py            
 │
 ├── README.md
 ├── pyproject.toml
