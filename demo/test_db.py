@@ -16,5 +16,4 @@ python -m demo.test_db
 
 ren .\database\db..py db.py
 
-
 '''

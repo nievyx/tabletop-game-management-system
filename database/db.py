@@ -6,7 +6,7 @@ DB_PATH = Path(__file__).resolve().parent / 'app.db'
 
 logger = logging.getLogger(__name__)
 
-def query_one(sql: str, params: tuple): #type hinting: sql : str, params : tuple ()
+def query_one(sql: str, params: tuple = ()): 
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     conn.execute('PRAGMA foreign_keys = ON;')
