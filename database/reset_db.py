@@ -11,29 +11,6 @@ DB_PATH = os.path.join(BASE_DIR, 'app.db') # The database file
 SCHEMA_PATH = os.path.join(BASE_DIR, 'schema.sql')
 SEED_PATH = os.path.join(BASE_DIR, 'seed.sql')
 
-# Legacy Function (from rpg game)
-# def create_db():
-#     logger.info('Creating database')
-#     conn = sqlite3.connect(DB_PATH)
-#     cursor = conn.cursor()
-
-#     # Create Items Table
-#     cursor.execute('''
-#     CREATE TABLE IF NOT EXISTS items (
-#         id INTEGER PRIMARY KEY, 
-#         name TEXT NOT NULL,
-#         item_type TEXT NOT NULL,
-#         strength TEXT NOT NULL,
-#         description TEXT, 
-#         value INTEGER NOT NULL
-#     )
-#     ''')
-    
-#     conn.commit()
-#     conn.close()
-#     logger.info('Database created')
-#     print("Database created!")
-
 def read_sql_file(path: str) -> str:
     if not os.path.exists(path):
         raise FileNotFoundError(f'Missing SQL file: {path}')
@@ -41,14 +18,14 @@ def read_sql_file(path: str) -> str:
         return f.read()
 
 def create_db(conn):
+    logger.info('Applying database schema..') 
     schema_sql = read_sql_file(SCHEMA_PATH)
     conn.executescript(schema_sql)
-    # logger.info('Created database Successfully') #- Shows regardless of whether it worked or not
 
 def seed_db(conn):
+    logger.info('Applying database seed data..') 
     seed_sql = read_sql_file(SEED_PATH)
     conn.executescript(seed_sql)
-    # logger.info('Seeded database Successfully') #- Shows regardless of whether it worked or not
 
 def create_and_seed_db():
     conn = sqlite3.connect(DB_PATH)
@@ -57,12 +34,12 @@ def create_and_seed_db():
         create_db(conn)
         seed_db(conn)
         conn.commit()
+        logger.info('Database created and seeded successfully')
     finally:
         conn.close()
 
 
 def safe_create_db():
-    error = None
     try:
         create_and_seed_db()
     except Exception as e:
@@ -92,11 +69,11 @@ def delete_db(safe_mode=True):
 
 
 
-def reset_db():
+def reset_db(safe_mode=True):
     logger.info('Resetting Database')
-    delete_db(safe_mode=False)
+    delete_db(safe_mode)
     safe_create_db()
 
 
 if __name__ == "__main__":
-    reset_db()
+    reset_db(safe_mode=False)
