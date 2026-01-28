@@ -18,6 +18,10 @@ Run from project root:
 ```bash
 unicorn api.main:app --reload
 ```
+or
+```
+python -m api
+```
 #### Once Running, visit:
 Run database health check
 - http://127.0.0.1:8000/db-check
@@ -57,8 +61,9 @@ databases-assignment/
 ├── api/
 │   ├── main.py               # FastAPI entry point
 │   ├── models.py             # Pydantic request/response schemas
-│   ├─  routes.py             # endpoints
-│   └── __init__.py            
+│   ├──  routes.py             # endpoints
+│   ├── __init__.py 
+│   └── __main__.py        
 │
 ├── README.md
 ├── pyproject.toml
