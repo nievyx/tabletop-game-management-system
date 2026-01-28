@@ -3,7 +3,7 @@ from database.db import query_one
 
 router = APIRouter()
 
-@router.get('/db-check')
+@router.get('/db-check') #http://127.0.0.1:8000/db-check
 def deb_check():
     row = query_one('SELECT 1 AS ok',())
     return row #should  return {'ok' :1}
