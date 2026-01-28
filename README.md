@@ -4,8 +4,20 @@ Relational database + CRUD demo REST API wrapper
 
 > seed.sql setup with a space themed tabletop game alongside a DRM platform
 
-## Setup database (First run only)
 
+
+## Setup database (First run only)
+<details>
+<summary>Setup Virtual environment</summary>
+
+```bash
+python -m venv .venv
+./venv\Scripts\activate
+pip install -r requirements.txt
+```
+</details>
+
+---
 Run from project root:
 
 ```bash
