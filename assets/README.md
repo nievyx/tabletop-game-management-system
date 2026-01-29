@@ -1,6 +1,6 @@
 
 
-[![Database Sample Data Demo](Capture.PNG)](https://niamhdev.com)
+[![Database Sample Data Demo](Capture.PNG)](![https://github.com/nievyx/Databases-Assignment/blob/assets/assets/Capture.PNG])
 
 Diagram created @ https://dbdiagram.io/
 
