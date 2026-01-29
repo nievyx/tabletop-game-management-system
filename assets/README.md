@@ -1,6 +1,6 @@
 
 
-[![Database Sample Data Demo](CAPTURE.PNG)](https://niamhdev.com)
+[![Database Sample Data Demo](Capture.PNG)](https://niamhdev.com)
 
 Diagram created @ https://dbdiagram.io/
 
