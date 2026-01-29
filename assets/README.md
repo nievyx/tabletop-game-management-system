@@ -5,9 +5,9 @@
 Diagram created @ https://dbdiagram.io/
 
 <details>
-<summary> </summary>
+<summary>Dbdiagram Pseudo Code</summary>
 
-```
+```sql
 Table users {
   user_id int [pk, increment]
   email text [not null, unique]
