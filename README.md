@@ -2,6 +2,9 @@
 
 Relational database + CRUD demo REST API wrapper
 
+> Project intentionally not using an ORM like SQL Alechemy nor Flask, extensive prior use of Flask-based frameworks. See project below for SQL database implementaion via ORM: 
+<https://github.com/nievyx/FlaskInventoryApp>
+
 > seed.sql setup with a space themed tabletop game alongside a DRM platform
 
 
