@@ -6,14 +6,14 @@ DB_PATH = Path(__file__).resolve().parent / 'app.db'
 
 logger = logging.getLogger(__name__)
 
-def query_one(sql: str, params: tuple = ()): 
-    '''Run a SELECT that returns 0 or 1 row'''
+def query_one(sql: str, params: tuple = ()):
+    """Run a SELECT that returns 0 or 1 row"""
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     conn.execute('PRAGMA foreign_keys = ON;')
 
     try:
-        logger.debug('Excuting query_one..')
+        logger.debug('Executing query_one..')
         row = conn.execute(sql, params).fetchone()
         return dict(row) if row else None
     finally:
@@ -26,7 +26,7 @@ def query_all(): #(...)
 def execute(): #(...)
     pass
 
-def get_conn(): # no arguements needed
+def get_conn(): # no arguments needed
     pass
 
 

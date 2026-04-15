@@ -24,14 +24,14 @@ pip install -r requirements.txt
 Run from project root:
 
 ```bash
-python database/reset_db.py
+python backend/database/reset_db.py
 ```
 
 ## How to run API ( Windows / Powershell)
 
 Run from project root:
 ```bash
-unicorn api.main:app --reload
+uvicorn backend.api.main:app --reload
 ```
 or
 ```
@@ -59,7 +59,7 @@ Users table check
 
 
 ## File Structure
-```py
+```
 databases-assignment/
 ├── database/
 │   ├── schema.sql
@@ -86,6 +86,46 @@ databases-assignment/
 ├── .env.example
 └── .gitignore      
 
+```
+
+## Desired File Structure
+```
+database-assignment/
+├── backend/
+│   ├── api/
+│   │   ├── main.py
+│   │   ├── routes/
+│   │   │   ├── users.py
+│   │   │   ├── profiles.py
+│   │   │   ├── assets.py
+│   │   │   └── quests.py
+│   │   ├── models.py
+│   │   └── schemas.py
+│   ├── database/
+│   │   ├── schema.sql
+│   │   ├── seed.sql
+│   │   ├── reset_db.py
+│   │   └── db.py
+│   └── requirements.txt
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── client.js
+│   │   ├── pages/
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Profiles.jsx
+│   │   │   ├── Assets.jsx
+│   │   │   └── Quests.jsx
+│   │   ├── components/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+├── docs/
+│   ├── erd.png
+│   ├── data-dictionary.docx
+│   └── notes.md
+├── README.md
 ```
 <details>
 <summary>Toggle optional Java structure<strong> 

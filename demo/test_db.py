@@ -1,4 +1,4 @@
-from database.db import query_one
+from backend.database import query_one
 
 print(query_one(
     'SELECT name FROM sqlite_master WHERE type="table"', 

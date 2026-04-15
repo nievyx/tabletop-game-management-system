@@ -1,7 +1,11 @@
 from fastapi import APIRouter
-from database.db import query_one
+from backend.database.db import query_one
 
 router = APIRouter()
+
+@router.get("/")
+def root():
+    return {"message": "API is running"}
 
 @router.get('/db-check') #http://127.0.0.1:8000/db-check
 def deb_check():
