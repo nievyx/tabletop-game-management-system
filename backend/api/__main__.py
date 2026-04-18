@@ -1,4 +1,7 @@
-# python -m api
+"""
+Run This:
+python -m backend.api
+"""
 
 import uvicorn
 
