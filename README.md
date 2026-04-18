@@ -61,7 +61,7 @@ Users table check
 ## File Structure
 ```
 databases-assignment/
-├── database/
+├── backend/database/
 │   ├── schema.sql
 │   ├── seed.sql
 │   ├── reset_db.py
@@ -69,11 +69,11 @@ databases-assignment/
 │   ├── app.db                # Ignored by git
 │   └── __init__.py 
 │
-├── demo/
+├── backend/demo/
 │   ├── demo.py               # CLI CRUD demo
 │   └── test_db.py
 │
-├── api/
+├── backend/api/
 │   ├── main.py               # FastAPI entry point
 │   ├── models.py             # Pydantic request/response schemas
 │   ├──  routes.py             # endpoints
@@ -90,7 +90,7 @@ databases-assignment/
 
 ## Desired File Structure
 ```
-database-assignment/
+root/
 ├── backend/
 │   ├── api/
 │   │   ├── main.py

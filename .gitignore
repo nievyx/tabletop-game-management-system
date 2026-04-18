@@ -7,3 +7,11 @@ venv/
 .idea
 
 .db
+
+
+backend/database/app.db
+
+
+# Windows icon files
+backend/desktop.ini
+frontend/desktop.ini

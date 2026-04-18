@@ -1,3 +1,24 @@
+## Frontend
+
+```
+root/
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── client.js
+│   │   ├── pages/
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Profiles.jsx
+│   │   │   ├── Assets.jsx
+│   │   │   └── Quests.jsx
+│   │   ├── components/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+
+```
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
