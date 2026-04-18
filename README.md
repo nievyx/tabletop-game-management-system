@@ -18,6 +18,18 @@ uvicorn backend.api.main:app --reload
 ```
 python backend/database/reset_db.py
 ```
+# Run Both Frontend and Backend
+Terminal 1:
+```
+
+uvicorn backend.api.main:app --reload
+```
+
+Terminal 2:
+```
+cd frontend
+npm run dev
+```
 
 
 ## File Structure

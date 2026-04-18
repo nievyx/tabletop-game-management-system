@@ -4,14 +4,17 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s:%(name)s:%(message)s')
 logger = logging.getLogger(__name__)
 
-DB_PATH = Path(__file__).resolve().parent / 'app.db'
+DB_PATH = Path(__file__).resolve().parent.parent / 'backend/api/app.db'
 
 def demo():
     if not DB_PATH.exists():
-        logger.info('Database does not exist')
+        logger.info("Demo script: database not found (this does not affect API)")
         return 'DATABASE DOES NOT EXIST'
+    else:
+        logger.info("Demo script: database found (this does not affect API)")
+        return 'DATABASE FOUND'
 
 if __name__ == '__main__':
-    if not DB_PATH.exists():
-        print('Database does not exist')
+    result = demo()
+    print(result)
         

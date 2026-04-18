@@ -1,5 +1,14 @@
 ## Frontend
 
+## Run: Option 1
+```
+cd frontend
+npm run dev
+```
+## Run : Option 2
+```
+npm run dev --prefix frontend
+```
 ```
 root/
 ├── frontend/
