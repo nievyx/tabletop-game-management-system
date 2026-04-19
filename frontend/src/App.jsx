@@ -1,6 +1,27 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App () {
+    const [status, setStatus] = useState('Loading...');
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        fetch('https://127.0.0.1:800/db-check')
+          .then((res) => {
+            if (!res.ok) {
+                throw new Error(`HTTP error: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then((data) => {
+              setStatus(`Connection: ok = ${data.ok}`);
+          })
+          .catch((err) => {
+             setError(err.message);
+             setStatus('Connection Failed');
+          });
+      }, []);
+
     return (
         <div className= 'app'>
             <header className="topbar">
@@ -11,7 +32,8 @@ function App () {
           <main className="content">
             <section className="card">
               <h2>Backend Status</h2>
-              <p>This section will show data from the API.</p>
+              <p>{status}</p>
+              {error && <p> Error: {error}</p>}
             </section>
 
             <section className="card">

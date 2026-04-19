@@ -26,7 +26,7 @@ uvicorn backend.api.main:app --reload
 ```
 or
 ```
-python -m api
+python -m backend.api
 ```
 #### Once Running, visit:
 Run database health check
@@ -51,7 +51,7 @@ Users table check
 
 
 ## File Structure
-```python
+```
 backend/
 ├── database/
 │   ├── schema.sql
