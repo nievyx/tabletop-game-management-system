@@ -6,7 +6,7 @@ function App () {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        fetch('https://127.0.0.1:800/db-check')
+        fetch('http://127.0.0.1:8000/db-check')
           .then((res) => {
             if (!res.ok) {
                 throw new Error(`HTTP error: ${res.status}`);
