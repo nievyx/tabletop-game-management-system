@@ -1,5 +1,7 @@
 ## Frontend
 
+### React + Vite
+
 ## Run: Option 1
 ```
 cd frontend
@@ -9,6 +11,7 @@ npm run dev
 ```
 npm run dev --prefix frontend
 ```
+## File Structure
 ```
 root/
 ├── frontend/

@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 function App () {
+    const BASE_URL = 'http://127.0.0.1.8000';
+//     const BASE_URL = import.meta.env.VITE_API_URL;
     const [status, setStatus] = useState('Loading...');
     const [error, setError] = useState('');
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/db-check')
@@ -20,6 +23,10 @@ function App () {
              setError(err.message);
              setStatus('Connection Failed');
           });
+        fetch(`${BASE_URL}/users`)
+        .then(res => res.json())
+        .then(data => setUsers(data))
+        .catch(err => console.error(err));
       }, []);
 
     return (
@@ -38,7 +45,18 @@ function App () {
 
             <section className="card">
               <h2>Users</h2>
-              <p>Later this will display user records from the backend.</p>
+
+              {users.length === 0 ? (
+                  <p>No users found</p>
+              ) : (
+                  <ul>
+                      {users.map((user) => (
+                          <li key={user.id}>
+                              {user.username} ({user.email})
+                          </li>
+                      ))}
+                  </ul>
+              )}
             </section>
 
             <section className="card">
