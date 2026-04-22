@@ -1,11 +1,16 @@
 from fastapi import APIRouter
-from backend.database.db import query_one
+from backend.database.db import query_one, query_all
 
 router = APIRouter()
 
 @router.get("/")
 def root():
     return {"message": "API is running"}
+
+@router.get('/users')
+def get_users():
+    rows = query_all('SELECT id, username, email FROM users')
+    return rows
 
 @router.get('/db-check') #http://127.0.0.1:8000/db-check
 def deb_check():

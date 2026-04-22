@@ -20,18 +20,22 @@ def query_one(sql: str, params: tuple = ()):
         conn.close()
 
 
-def query_all(): #(...)
-    pass
+def query_all(sql: str, params: tuple = ()):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(sql, params)
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
 
 def execute(): #(...)
     pass
 
-def get_conn(): # no arguments needed
-    pass
-
+def get_connection(): # no arguments needed
+    return sqlite3.connect(DB_PATH)
 
 if __name__ == '__main__':
     if not DB_PATH.exists():
-        print('Database does not exist')
+        print('FROM: db.py: Database does not exist')
 
     # result = query_one("SELECT name FROM sqlite_master WHERE type='table'")
