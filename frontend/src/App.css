@@ -1,3 +1,5 @@
+/* New */
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -14,6 +16,12 @@ tr {
 .card {
   padding: 1.0rem;
 }
+
+.topbar {
+  padding: 1rem;
+}
+
+/* New end */
 
 .counter {
   font-size: 16px;

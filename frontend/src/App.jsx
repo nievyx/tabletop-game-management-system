@@ -64,6 +64,8 @@ function App () {
   }, []);
 
     return (
+        // TODO: Later add background
+        // <GalaxyBackground />
         <div className= 'app'>
             <header className="topbar">
                 <h1>Nova Systems Dashboard</h1>
