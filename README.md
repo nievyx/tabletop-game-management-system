@@ -87,10 +87,11 @@ root/
 │   │   │   └── client.js
 │   │   ├── pages/
 │   │   │   ├── Dashboard.jsx
-│   │   │   ├── Profiles.jsx
+│   │   │   ├── ProfilesPage.jsx
 │   │   │   ├── Assets.jsx
 │   │   │   └── Quests.jsx
 │   │   ├── components/
+│   │   │   └── Profiles.jsx
 │   │   ├── App.jsx
 │   │   └── main.jsx
 │   ├── package.json

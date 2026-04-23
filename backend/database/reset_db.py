@@ -38,7 +38,6 @@ def create_and_seed_db():
     finally:
         conn.close()
 
-
 def safe_create_db():
     try:
         create_and_seed_db()
@@ -66,8 +65,6 @@ def delete_db(safe_mode=True):
     os.remove(DB_PATH)
     print(f'{DB_PATH} deleted!')
     return True
-
-
 
 def reset_db(safe_mode=True):
     logger.info('Resetting Database')

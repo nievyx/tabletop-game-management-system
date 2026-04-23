@@ -1,11 +1,11 @@
 PRAGMA foreign_keys = ON; -- Enable foreign key constraints at runtime
 
 -- Users (hashed_password is a placeholder)
-INSERT INTO users(user_id, email, password_hash, created_at)
+INSERT INTO users(user_id, username, email, password_hash, created_at)
 VALUES
-(1, 'thea22hale@nove-system.com', 'HASHED_PASSWORD_1', '2025-01-01'),
-(2, 'marloweroy101@nove-system.com', 'HASHED_PASSWORD_2', '2025-01-02'),
-(3, 'kaylie-hull@nove-system.com', 'HASHED_PASSWORD_3', '2025-01-05');
+(1,'AuroraPrime1', 'thea22hale@nova-systems.com', 'HASHED_PASSWORD_1', '2025-01-01'),
+(2, 'Aurora_Alt', 'katieroy101@nova-systems.com', 'HASHED_PASSWORD_2', '2025-01-02'),
+(3, 'Kaylie_xo', 'kaylie-hull@nova-systems.com','HASHED_PASSWORD_3', '2025-01-05');
 
 -- Auth Events (ip_hash is a placeholder)
 INSERT INTO auth_events (event_id, user_id, event_type, event_time, ip_hash)

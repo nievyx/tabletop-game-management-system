@@ -2,6 +2,7 @@ PRAGMA foreign_keys = ON;
 
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
     created_at DATE NOT NULL
@@ -43,7 +44,7 @@ CREATE TABLE quests (
     quest_id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL UNIQUE, 
     difficulty TEXT NOT NULL CHECK (difficulty IN ('Easy', 'Medium','Hard'))
-    -- Difficulty levels stored as a constriant for simplicity.
+    -- Difficulty levels stored as a constraint for simplicity.
     -- ( This could be refactored into lookup table if more difficulty setting introduced  )
 );
 

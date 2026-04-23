@@ -22,11 +22,12 @@ def query_one(sql: str, params: tuple = ()):
 
 def query_all(sql: str, params: tuple = ()):
     conn = get_connection()
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute(sql, params)
     rows = cursor.fetchall()
     conn.close()
-    return rows
+    return [dict(row) for row in rows]
 
 def execute(): #(...)
     pass

@@ -1,15 +1,25 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
+const BASE_URL = 'http://127.0.0.1:8000';
+
 function App () {
-    const BASE_URL = 'http://127.0.0.1.8000';
 //     const BASE_URL = import.meta.env.VITE_API_URL;
     const [status, setStatus] = useState('Loading...');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
+    // Users
     const [users, setUsers] = useState([]);
+    const [loadingUsers, setLoadingUsers] = useState(true);
+    // Characters
+    const [loadingCharacters, setLoadingCharacters] = useState(true);
+    const [characters, setCharacters] = useState(true);
+
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/db-check')
+
+        // Database Health Check
+        fetch(`${BASE_URL}/db-check`)
           .then((res) => {
             if (!res.ok) {
                 throw new Error(`HTTP error: ${res.status}`);
@@ -23,11 +33,34 @@ function App () {
              setError(err.message);
              setStatus('Connection Failed');
           });
+
+        // Fetch Users
         fetch(`${BASE_URL}/users`)
-        .then(res => res.json())
-        .then(data => setUsers(data))
-        .catch(err => console.error(err));
-      }, []);
+        .then((res) => res.json())
+        .then((data) => {
+            setUsers(data);
+            setLoadingUsers(false);
+        })
+        .catch((err) => {
+            console.error(err);
+            setLoadingUsers(false);
+            console.log(users);
+        });
+
+        // Fetch Characters
+        fetch(`${BASE_URL}/characters`)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("characters data:", data);
+                setCharacters(data);
+                setLoadingCharacters(false);
+            })
+            .catch((err) => {
+                console.error(err);
+                setLoadingCharacters(false);
+            });
+
+  }, []);
 
     return (
         <div className= 'app'>
@@ -43,26 +76,51 @@ function App () {
               {error && <p> Error: {error}</p>}
             </section>
 
+            {/* Users*/}
             <section className="card">
               <h2>Users</h2>
-
               {users.length === 0 ? (
                   <p>No users found</p>
               ) : (
-                  <ul>
+                  <table>
+                      <thead>
+                      <tr>
+                          <th>Username</th>
+                          <th>Email Address</th>
+                      </tr>
+                      </thead>
+                      <tbody>
                       {users.map((user) => (
-                          <li key={user.id}>
-                              {user.username} ({user.email})
-                          </li>
+                          <tr key={user.username}>
+                              <td>{user.username}</td>
+                              <td>{user.email}</td>
+                          </tr>
                       ))}
-                  </ul>
+                      </tbody>
+                  </table>
               )}
             </section>
 
-            <section className="card">
-              <h2>Profiles</h2>
-              <p>Later this will display profile or character data.</p>
-            </section>
+          {/* Characters */}
+          <section className="card">
+              <h2>Characters</h2>
+              {loadingCharacters ? (
+                  <p>Loading characters...</p>
+              ) : characters.length === 0 ? (
+                  <p>No characters found</p>
+              ) : (
+                  <div className="character-list">
+                      {characters.map((character) => (
+                          <div key={character.id} className="character-item">
+                              <h3>{character.display_name}</h3>
+                              <p>Level: {character.level}</p>
+                              <p>Class: {character.class_name}</p>
+                          </div>
+                  ))}
+                  </div>
+              )}
+             </section>
+
           </main>
         </div>
     );
