@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Users from './components/Users';
 import Characters from "./components/Characters.jsx";
+import GalaxyBackground from "./components/backgrounds/GalaxyBackground";
 
 const BASE_URL = 'http://127.0.0.1:8000';
 
@@ -16,6 +17,8 @@ function App () {
     // Characters
     const [loadingCharacters, setLoadingCharacters] = useState(true);
     const [characters, setCharacters] = useState(true);
+    // Toggle Galaxy Background
+    const [showGalaxy, setShowGalaxy] = useState(true);
 
 
     useEffect(() => {
@@ -64,12 +67,21 @@ function App () {
   }, []);
 
     return (
-        // TODO: Later add background
-        // <GalaxyBackground />
+        <div className="app-shell">
+            {showGalaxy && <GalaxyBackground />}
+
         <div className= 'app'>
             <header className="topbar">
                 <h1>Nova Systems Dashboard</h1>
                 <p>Database API demo frontend</p>
+
+                {/* Toggle galaxy button */}
+                <button onClick={() => {
+                    console.log('Click toggle button');
+                    setShowGalaxy(!showGalaxy);}}>
+                    {showGalaxy ? 'Hide Galaxy' : 'Show Galaxy'}
+                </button>
+
             </header>
 
           <main className="content">
@@ -87,6 +99,7 @@ function App () {
 
 
           </main>
+        </div>
         </div>
     );
 }
