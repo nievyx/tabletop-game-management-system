@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import Users from './components/Users';
+import Characters from "./components/Characters.jsx";
 
 const BASE_URL = 'http://127.0.0.1:8000';
 
@@ -17,7 +19,6 @@ function App () {
 
 
     useEffect(() => {
-
         // Database Health Check
         fetch(`${BASE_URL}/db-check`)
           .then((res) => {
@@ -77,49 +78,11 @@ function App () {
             </section>
 
             {/* Users*/}
-            <section className="card">
-              <h2>Users</h2>
-              {users.length === 0 ? (
-                  <p>No users found</p>
-              ) : (
-                  <table>
-                      <thead>
-                      <tr>
-                          <th>Username</th>
-                          <th>Email Address</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      {users.map((user) => (
-                          <tr key={user.username}>
-                              <td>{user.username}</td>
-                              <td>{user.email}</td>
-                          </tr>
-                      ))}
-                      </tbody>
-                  </table>
-              )}
-            </section>
+            <Users users={users} loadingUsers={loadingUsers} />
 
           {/* Characters */}
-          <section className="card">
-              <h2>Characters</h2>
-              {loadingCharacters ? (
-                  <p>Loading characters...</p>
-              ) : characters.length === 0 ? (
-                  <p>No characters found</p>
-              ) : (
-                  <div className="character-list">
-                      {characters.map((character) => (
-                          <div key={character.id} className="character-item">
-                              <h3>{character.display_name}</h3>
-                              <p>Level: {character.level}</p>
-                              <p>Class: {character.class_name}</p>
-                          </div>
-                  ))}
-                  </div>
-              )}
-             </section>
+          <Characters characters={characters} loadingCharacters={loadingCharacters} />
+
 
           </main>
         </div>
