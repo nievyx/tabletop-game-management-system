@@ -40,7 +40,7 @@ function App () {
           });
 
         // Fetch Users
-        fetch(`${BASE_URL}/users`)
+        fetch(`${BASE_URL}/users/`)
         .then((res) => res.json())
         .then((data) => {
             setUsers(data);

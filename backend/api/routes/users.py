@@ -1,13 +1,11 @@
-from backend.database.db import get_db
-from backend.api.repositories import get_all_users
-
 from fastapi import APIRouter, Depends
-from backend.database.db import query_one, query_all
+import sqlite3
+from backend.database.db import get_db
 
-router = APIRouter(tags=['Users'])
+router = APIRouter(prefix='/users',tags=['Users'])
 
-@router.get('/users')
-def get_users():
-    rows = query_all('SELECT user_id, username, email FROM users')
-    return rows
+@router.get('/')
+def get_users(db: sqlite3.Connection = Depends(get_db)):
+    rows = db.execute('SELECT * FROM users').fetchall()
+    return [dict(row) for row in rows]
 
