@@ -10,10 +10,10 @@ def get_users(db: sqlite3.Connection = Depends(get_db)):
     return [dict(row) for row in rows]
 
 @router.post('/')
-def create_users(username: str, email: str, db: sqlite3.Connection = Depends(get_db)):
+def create_users(username: str, email: str, password_hash: str, db : sqlite3.Connection = Depends(get_db)):
     cursor = db.execute(
-        'INSERT INTO users (username, email) VALUES (?, ?)',
-    (username, email)
+        'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
+    (username, email, password_hash)
     )
     db.commit()
     return {'user_id': cursor.lastrowid}
