@@ -31,40 +31,10 @@ cd frontend
 npm run dev
 ```
 
-
-## File Structure
-```
-databases-assignment/
-├── backend/database/
-│   ├── schema.sql
-│   ├── seed.sql
-│   ├── reset_db.py
-│   ├── db.py                 # connection + query helpers
-│   ├── app.db                # Ignored by git
-│   └── __init__.py 
-│
-├── backend/demo/
-│   ├── demo.py               # CLI CRUD demo
-│   └── test_db.py
-│
-├── backend/api/
-│   ├── main.py               # FastAPI entry point
-│   ├── models.py             # Pydantic request/response schemas
-│   ├──  routes.py             # endpoints
-│   ├── __init__.py 
-│   └── __main__.py        
-│
-├── README.md
-├── pyproject.toml
-├── requirements.txt # Runtime dependies (pip/venv)
-├── .env.example
-└── .gitignore      
-
-```
-
-## Desired File Structure
+## Backend File Structure
 ```
 root/
+
 ├── backend/
 │   ├── api/
 │   │   ├── main.py
@@ -81,6 +51,10 @@ root/
 │   │   ├── reset_db.py
 │   │   └── db.py
 │   └── requirements.txt
+```
+## Frontend File Structure
+```
+
 ├── frontend/
 │   ├── src/
 │   │   ├── api/
@@ -117,3 +91,16 @@ root/
                 └── Demo.java
 ```
 </details>
+
+### Developer Note: Password Placeholder
+
+This prototype currently inserts a temporary placeholder value for `password_hash`.
+
+```python
+password_hash = "TEMP_HASH"
+
+cursor = db.execute(
+    'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
+    (user.username, user.email, "TEMP_HASH")
+)
+```

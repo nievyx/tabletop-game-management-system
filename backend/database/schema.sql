@@ -21,7 +21,7 @@ CREATE TABLE profiles (
     profile_id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     display_name TEXT NOT NULL, -- Displays names not unique, can be shared accross muliple accounts
-    created_at DATE NOT NULL,
+    created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -52,7 +52,7 @@ CREATE TABLE character_quests (
     character_id INTEGER NOT NULL, 
     quest_id INTEGER NOT NULL, 
     status TEXT NOT NULL CHECK (status IN ('Completed', 'In Progress')),
-    started_at DATE NOT NULL, 
+    started_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     completed_at DATE, -- NULL when in progress
     PRIMARY KEY (character_id, quest_id),
     CHECK (
@@ -81,7 +81,7 @@ CREATE TABLE licenses (
     user_id INTEGER NOT NULL,
     asset_id INTEGER NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('Active', 'Expired')),
-    issued_at DATE NOT NULL,
+    issued_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     expires_at DATE,
     CHECK (
         (status = 'Active' AND expires_at IS NULL)

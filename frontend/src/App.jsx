@@ -7,6 +7,7 @@ import './tables.css'
 
 const BASE_URL = 'http://127.0.0.1:8000';
 
+
 function App () {
 //     const BASE_URL = import.meta.env.VITE_API_URL;
     const [status, setStatus] = useState('Loading...');
@@ -68,9 +69,11 @@ function App () {
   }, []);
 
     return (
+        // Galaxy Background
         <div className="app-shell">
             {showGalaxy && <GalaxyBackground />}
 
+        {/* Dashboard */}
         <div className= 'app'>
             <header className="topbar">
                 <h1>Nova Systems Dashboard</h1>
@@ -82,9 +85,9 @@ function App () {
                     setShowGalaxy(!showGalaxy);}}>
                     {showGalaxy ? 'Hide Galaxy' : 'Show Galaxy'}
                 </button>
-
             </header>
 
+          {/* Backend Status Block */}
           <main className="content">
             <section className="card">
               <h2>Backend Status</h2>
@@ -92,10 +95,10 @@ function App () {
               {error && <p> Error: {error}</p>}
             </section>
 
-            {/* Users */}
-            <Users users={users} loadingUsers={loadingUsers} />
+            {/* Users Block */}
+            <Users />
 
-          {/* Characters */}
+          {/* Characters Block */}
           <Characters characters={characters} loadingCharacters={loadingCharacters} />
 
 
