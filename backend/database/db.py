@@ -6,6 +6,19 @@ DB_PATH = Path(__file__).resolve().parent / 'app.db'
 
 logger = logging.getLogger(__name__)
 
+def get_db():
+    conn = sqlite3.connect(DB_PATH)
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+def fetch_all(): #(..)
+    pass
+
+def fetch_one(): #(..)
+    pass
+
 def query_one(sql: str, params: tuple = ()):
     """Run a SELECT that returns 0 or 1 row"""
     conn = sqlite3.connect(DB_PATH)

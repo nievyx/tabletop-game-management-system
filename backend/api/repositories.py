@@ -1,3 +1,18 @@
+from fastapi import HTTPException
+
+from backend.database import db
+from backend.database.db import get_db
+
+def _fetchone_or_404(db, query, params=(), detail='Not Found'):
+    row = db.execute(query, params).fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail=detail)
+    return dict(row)
+
+def get_all_users(db) -> list[dict]:
+    rows = db.execute('SELECT user_id, email FROM users').fetchall()
+    return [dict(row) for row in rows]
+
 class CharacterRepository:
 
     BASE_QUERY = """

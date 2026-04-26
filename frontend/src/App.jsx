@@ -3,6 +3,7 @@ import './App.css';
 import Users from './components/Users';
 import Characters from "./components/Characters.jsx";
 import GalaxyBackground from "./components/backgrounds/GalaxyBackground";
+import './tables.css'
 
 const BASE_URL = 'http://127.0.0.1:8000';
 
@@ -91,7 +92,7 @@ function App () {
               {error && <p> Error: {error}</p>}
             </section>
 
-            {/* Users*/}
+            {/* Users */}
             <Users users={users} loadingUsers={loadingUsers} />
 
           {/* Characters */}
