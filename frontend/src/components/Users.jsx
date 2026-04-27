@@ -51,23 +51,20 @@ function Users() {
 }
 
     // DELETE
-    async function handleDelete(userId) {
-        if (!window.confirm(`Are you sure you want to delete ${userId}`)) return;
+    async function handleDelete(user) {
+        if (!window.confirm(`Are you sure you want to delete user: ${user.username}`)) return;
 
 
         try {
-            await del(`/users/${userId}`);
+            await del(`/users/${user.user_id}`);
             loadUsers().catch(console.error);
         } catch (err) {
             alert('Cannot delete this user because they are linked to other records.');
         }
     }
 
-
-
-
-
     return (
+        // === USER TABLE ===
         <section className="card">
             <h2>Users</h2>
             {users.length === 0 ? (
@@ -92,7 +89,7 @@ function Users() {
                             <td>{user.email}</td>
                             <td>
                                 <button onClick={() => handleEdit(user)}>Edit</button>
-                                <button onClick={() => handleDelete(user.user_id)}>Delete</button>
+                                <button onClick={() => handleDelete(user)}>Delete</button>
                             </td>
                         </tr>
                     ))}
