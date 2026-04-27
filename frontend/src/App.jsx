@@ -13,9 +13,6 @@ function App () {
     const [status, setStatus] = useState('Loading...');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
-    // Users
-    const [users, setUsers] = useState([]);
-    const [loadingUsers, setLoadingUsers] = useState(true);
     // Characters
     const [loadingCharacters, setLoadingCharacters] = useState(true);
     const [characters, setCharacters] = useState(true);
@@ -39,19 +36,6 @@ function App () {
              setError(err.message);
              setStatus('Connection Failed');
           });
-
-        // Fetch Users
-        fetch(`${BASE_URL}/users/`)
-        .then((res) => res.json())
-        .then((data) => {
-            setUsers(data);
-            setLoadingUsers(false);
-        })
-        .catch((err) => {
-            console.error(err);
-            setLoadingUsers(false);
-            console.log(users);
-        });
 
         // Fetch Characters
         fetch(`${BASE_URL}/characters`)

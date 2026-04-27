@@ -9,10 +9,6 @@ load_dotenv()
 
 app = FastAPI()
 
-app.include_router(health.router)
-app.include_router(users.router)
-app.include_router(profiles.router)
-app.include_router(characters.router)
 
 origins = os.getenv(
     'frontend_origins',
@@ -26,6 +22,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(health.router)
+app.include_router(users.router)
+app.include_router(profiles.router)
+app.include_router(characters.router)
 
 @app.get('/db-check')
 def health():

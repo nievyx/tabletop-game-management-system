@@ -97,6 +97,8 @@ root/
 This prototype currently inserts a temporary placeholder value for `password_hash`.
 
 ```python
+# routes/users.py
+ 
 password_hash = "TEMP_HASH"
 
 cursor = db.execute(

@@ -1,8 +1,9 @@
 // USER CRUDs
 
-import { get } from '../api/client';
+import { get, post, put, del } from '../api/client';
 import { useEffect, useState} from "react";
 
+const API_URL = 'http://127.0.0.1:8000/users/';
 
 // USERS
 function Users() {
@@ -31,36 +32,38 @@ function Users() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        const method = editingUser ? 'PUT' : 'POST';
-        const url = editingUser
-            ? `${API_URL}${editingUser}`
-            : API_URL;
+        if (editingUser) {
+            await put(`/users/${editingUser}`, {
+                ...form,
+                password_hash: "demo_hash",
+            });
 
-        await fetch(url, {
-            method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({form})
-        });
+            if (editingUser) {
+                await put(`/users/${editingUser}`, payload);
+            }else{
+                await post(`/users/`, payload);
+            }
+            setForm({ username: '', email: ''});
+            setEditingUser(null);
 
-        setForm({ username: '', email: ''});
-        setEditingUser(null);
-
-        await loadUsers();
-    }
+            await loadUsers();
+        }
+}
 
     // DELETE
     async function handleDelete(userId) {
-        const confirmed = window.confirm(`Are you sure you want to delete ${userId}`);
+        if (!window.confirm(`Are you sure you want to delete ${userId}`)) return;
 
-        if (!confirmed) return;
 
-        await del(`${BASE_URL}/${userId}`, {
-            method: 'DELETE',
-        });
-        loadUsers().catch(console.error)
+        try {
+            await del(`/users/${userId}`);
+            loadUsers().catch(console.error);
+        } catch (err) {
+            alert('Cannot delete this user because they are linked to other records.');
+        }
     }
+
+
 
 
 
