@@ -9,7 +9,7 @@ const API_URL = 'http://127.0.0.1:8000/users/';
 function Users() {
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
-    const [form, setForm] = useState({ username: '', email: ''});
+    const [form, setForm] = useState({username: '', email: ''});
 
     // LOAD USERS
     async function loadUsers() {
@@ -25,30 +25,39 @@ function Users() {
     function handleEdit(user) {
         console.log('Editing user', user);  //DEBUG
         setEditingUser(user.user_id);
-        setForm({ username: user.username, email: user.email });
+        setForm({
+            username: user.username,
+            email: user.email
+        });
     }
 
     // SUBMIT (Add + update)
     async function handleSubmit(e) {
         e.preventDefault();
+        console.log('Adding user');  //TODO : DEBUG
 
-        if (editingUser) {
-            await put(`/users/${editingUser}`, {
-                ...form,
-                password_hash: "demo_hash",
-            });
+        const payload = {
+            ...form,
+            password_hash: 'demo_hash'
+        };
 
+        try {
             if (editingUser) {
                 await put(`/users/${editingUser}`, payload);
-            }else{
+            } else {
                 await post(`/users/`, payload);
             }
-            setForm({ username: '', email: ''});
-            setEditingUser(null);
 
-            await loadUsers();
+            setForm({username: '', email: ''});
+            setEditingUser(null);
+            loadUsers();
+
+        } catch (err) {
+            alert('Something went wrong!');
         }
-}
+
+    }
+
 
     // DELETE
     async function handleDelete(user) {
@@ -67,11 +76,11 @@ function Users() {
         // === USER TABLE ===
         <section className="card">
             <h2>Users</h2>
-            {users.length === 0 ? (
-                <p>No users found</p>
-            ) : (
 
-                // Table Headers
+            {users.length === 0 && <p>No users found</p>}
+
+                {/* Table Headers*/}
+                <div className="table-container">
                 <table>
                     <thead>
                     <tr>
@@ -88,14 +97,39 @@ function Users() {
                             <td>{user.username}</td>
                             <td>{user.email}</td>
                             <td>
-                                <button onClick={() => handleEdit(user)}>Edit</button>
-                                <button onClick={() => handleDelete(user)}>Delete</button>
+                                <button className='edit' onClick={() => handleEdit(user)}>Edit</button>
+                                <button className='delete' onClick={() => handleDelete(user)}>Delete</button>
                             </td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
-            )}
+                </div>
+
+            {/* FORM */}
+            <div className="glass">
+            <form onSubmit={handleSubmit}>
+                { editingUser ? 'Update User : ' : 'Add user : ' }
+                <input
+                    value={form.username}
+                    onChange={(e) =>
+                        setForm({ ...form, username: e.target.value })
+                    }
+                    placeholder="Username"
+                />
+
+                <input
+                    value={form.email}
+                    onChange={(e) =>
+                        setForm({ ...form, email: e.target.value })
+                    }
+                    placeholder="Email"
+                />
+                <button className='update' type='submit'>
+                    { editingUser ? 'Save' : 'Add user' }
+                </button>
+            </form>
+            </div>
         </section>
     )
 }

@@ -1,0 +1,29 @@
+/* Edit button */
+button.edit {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Delete button */
+button.delete {
+    background-color: crimson;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Add / Save button */
+button.update {
+    background-color: seagreen;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+}

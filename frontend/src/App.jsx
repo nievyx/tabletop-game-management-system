@@ -3,7 +3,8 @@ import './App.css';
 import Users from './components/Users';
 import Characters from "./components/Characters.jsx";
 import GalaxyBackground from "./components/backgrounds/GalaxyBackground";
-import './tables.css'
+import './styles/tables.css'
+import './styles/buttons.css';
 
 const BASE_URL = 'http://127.0.0.1:8000';
 

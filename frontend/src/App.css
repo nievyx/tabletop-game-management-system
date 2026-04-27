@@ -1,6 +1,42 @@
 
 /* New */
 
+.table-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+/*th {*/
+/*  position: sticky;*/
+/*  top: 0;*/
+/*  background: rgba(255,255,255,0.15);*/
+/*  backdrop-filter: blur(14px);*/
+/*  z-index: 1;*/
+/*}*/
+
+
+th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  background: rgba(55, 55, 55, 0.7);
+  backdrop-filter: blur(12px);
+}
+.glass {
+
+    width: 100%;
+    border-collapse: collapse;
+
+    /* Glass Table */
+    background: rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1.9px);
+    -webkit-backdrop-filter: blur(1.9px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
+}
+
 .background-layer {
   /*pointer-events: none;*/
 }
