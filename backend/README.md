@@ -22,7 +22,7 @@ python backend/database/reset_db.py
 
 Run from project root:
 ```bash
-uvicorn backend.api.main:app --reload
+uvicorn backend.app.main:app --reload
 ```
 or
 ```

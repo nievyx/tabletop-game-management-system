@@ -1,9 +1,7 @@
 // USER CRUDs
 
-import { get, post, put, del } from '../api/client';
+import {  get, post, put, del } from '../api/client';
 import { useEffect, useState} from "react";
-
-const API_URL = 'http://127.0.0.1:8000/users/';
 
 // USERS
 function Users() {

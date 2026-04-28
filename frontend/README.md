@@ -13,21 +13,17 @@ npm run dev --prefix frontend
 ```
 ## File Structure
 ```
-root/
-├── frontend/
-│   ├── src/
-│   │   ├── api/
-│   │   │   └── client.js
-│   │   ├── pages/
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── ProfilesPage.jsx
-│   │   │   ├── Assets.jsx
-│   │   │   └── Quests.jsx
-│   │   ├── components/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
+ frontend/src/
+ ├── app/
+ │   └── client.js
+ ├── pages/
+ │   ├── HomePage.jsx
+ │   ├── ProfilesPage.jsx
+ │   ├── Assets.jsx
+ │   └── Quests.jsx
+ ├── components/
+ │   ├── App.jsx
+ │   └── main.jsx
 
 ```
 

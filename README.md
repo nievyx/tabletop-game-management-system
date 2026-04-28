@@ -11,7 +11,7 @@ Relational database + CRUD demo REST API wrapper
 
 ```bash
 python backend/database/reset_db.py
-uvicorn backend.api.main:app --reload
+uvicorn backend.app.main:app --reload
 ```
 
 ## Reset Database
@@ -30,6 +30,18 @@ Terminal 2:
 cd frontend
 npm run dev
 ```
+
+
+## Root File Structure
+├── docs/
+│   ├── erd.png
+│   ├── data-dictionary.docx
+│   └── notes.md
+├── demo/
+│   └── demo.py
+│   └── test_db.py
+├── README.md
+
 
 ## Backend File Structure
 ```
@@ -60,7 +72,7 @@ root/
 │   │   ├── api/
 │   │   │   └── client.js
 │   │   ├── pages/
-│   │   │   ├── Dashboard.jsx
+│   │   │   ├── HomePage.jsx
 │   │   │   ├── ProfilesPage.jsx
 │   │   │   ├── Assets.jsx
 │   │   │   └── Quests.jsx
@@ -70,11 +82,7 @@ root/
 │   │   └── main.jsx
 │   ├── package.json
 │   └── vite.config.js
-├── docs/
-│   ├── erd.png
-│   ├── data-dictionary.docx
-│   └── notes.md
-├── README.md
+
 ```
 <details>
 <summary>Toggle optional Java structure<strong> 

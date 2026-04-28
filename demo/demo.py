@@ -4,7 +4,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s:%(name)s:%(message)s')
 logger = logging.getLogger(__name__)
 
-DB_PATH = Path(__file__).resolve().parent.parent / 'backend/api/app.db'
+DB_PATH = Path(__file__).resolve().parent.parent / 'backend/app/app.db'
 
 def demo():
     if not DB_PATH.exists():

@@ -14,9 +14,6 @@ function App () {
     const [status, setStatus] = useState('Loading...');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
-    // Characters
-    const [loadingCharacters, setLoadingCharacters] = useState(true);
-    const [characters, setCharacters] = useState(true);
     // Toggle Galaxy Background
     const [showGalaxy, setShowGalaxy] = useState(true);
 
@@ -38,19 +35,6 @@ function App () {
              setStatus('Connection Failed');
           });
 
-        // Fetch Characters
-        fetch(`${BASE_URL}/characters`)
-            .then((res) => res.json())
-            .then((data) => {
-                console.log("characters data:", data);
-                setCharacters(data);
-                setLoadingCharacters(false);
-            })
-            .catch((err) => {
-                console.error(err);
-                setLoadingCharacters(false);
-            });
-
   }, []);
 
     return (
@@ -58,7 +42,7 @@ function App () {
         <div className="app-shell">
             {showGalaxy && <GalaxyBackground />}
 
-        {/* Dashboard */}
+        {/* === DASHBOARD === */}
         <div className= 'app'>
             <header className="topbar">
                 <h1>Nova Systems Dashboard</h1>
@@ -84,7 +68,7 @@ function App () {
             <Users />
 
           {/* Characters Block */}
-          <Characters characters={characters} loadingCharacters={loadingCharacters} />
+          <Characters />
 
 
           </main>

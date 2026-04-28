@@ -2,7 +2,7 @@ import sqlite3
 import hashlib
 from fastapi import APIRouter, Depends, HTTPException
 from backend.database.db import get_db
-from backend.api.models import UserCreate, UserUpdate
+from backend.app.models import UserCreate, UserUpdate
 
 router = APIRouter(prefix='/users',tags=['Users'])
 
