@@ -1,9 +1,9 @@
 PRAGMA foreign_keys = ON;
 
-INSERT INTO players (email, display_name) VALUES
-('aurora@example.com', 'AuroraPrime'),
-('kylie@example.com', 'Kaylie_xo'),
-('dockrat@example.com', 'DockRatBob');
+INSERT INTO players (email, display_name, password_hash) VALUES
+('aurora@example.com', 'AuroraPrime', 'TEMP_HASH'),
+('kylie@example.com', 'Kaylie_xo', 'TEMP_HASH'),
+('dockrat@example.com', 'DockRatBob', 'TEMP_HASH');
 
 INSERT INTO classes (class_name, description) VALUES
 ('Plasma Knight', 'A frontline fighter using energy blades.'),

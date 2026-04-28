@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS players;
 
 CREATE TABLE players (
     player_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT NOT NULL UNIQUE,
+    email TEXT NOT NULL UNIQUE
         CHECK (length(email) <= 255),
     display_name TEXT NOT NULL UNIQUE
         CHECK (length(display_name) <= 100),
@@ -27,7 +27,7 @@ CREATE TABLE players (
 CREATE TABLE classes (
     class_id INTEGER PRIMARY KEY AUTOINCREMENT,
     class_name TEXT NOT NULL UNIQUE
-        CHECK (length(character_name) <= 255),
+        CHECK (length(class_name) <= 255),
     description TEXT
 );
 
