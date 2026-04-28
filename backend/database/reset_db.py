@@ -12,6 +12,15 @@ SCHEMA_PATH = os.path.join(BASE_DIR, 'schema.sql')
 SEED_PATH = os.path.join(BASE_DIR, 'seed.sql')
 
 def read_sql_file(path: str) -> str:
+    """
+       Reads and returns the contents of a SQL file.
+
+       Args:
+           path (str): Path to the SQL file.
+
+       Returns:
+           str: SQL script contents.
+       """
     if not os.path.exists(path):
         raise FileNotFoundError(f'Missing SQL file: {path}')
     with open(path, 'r', encoding='utf-8') as f:
@@ -52,9 +61,17 @@ def confirm_delete():
     return choice.lower() == 'yes'
 
 def delete_db(safe_mode=True):
+    """
+    Deletes the existing database (if present)
+
+    Args:
+        safe_mode (bool, optional): If True, Prompts before deleting database. Defaults to True.
+
+    Returns:
+        bool: True if successful, False otherwise
+    """
     if not os.path.exists(DB_PATH):
-        logger.warning('Database does not exist: %s', DB_PATH)
-        print(f'⚠{DB_PATH} does not exist')
+        logger.info('No existing database found. Skipping delete')
         return False
     
     if safe_mode and not confirm_delete():
@@ -67,6 +84,12 @@ def delete_db(safe_mode=True):
     return True
 
 def reset_db(safe_mode=True):
+    """Deletes the existing database (if present)
+    and recreates it using schema and seed SQL data.
+
+    Args:
+        safe_mode (bool, optional): If True, Prompts before deleting database. Defaults to True.
+    """
     logger.info('Resetting Database')
     delete_db(safe_mode)
     safe_create_db()

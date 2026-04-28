@@ -2,10 +2,26 @@
 
 Relational database + CRUD demo REST API wrapper
 
-> Project intentionally not using an ORM like SQL Alechemy nor Flask, extensive prior use of Flask-based frameworks. See project below for SQL database implementaion via ORM: 
+
+The application uses:
+
+- **FastAPI** for the backend API
+- **Uvicorn** as the ASGI server
+- **SQLite** for the database
+- **React + Vite** for the frontend
+- **Docker Compose** to run the frontend and backend together
+
+> Project intentionally not using an ORM like SQL Alechemy nor Flask, due to extensive prior use of Flask-based frameworks. See project below for SQL database implementaion via ORM: 
 <https://github.com/nievyx/FlaskInventoryApp>
 
 > seed.sql setup with a space themed tabletop game alongside a DRM platform
+
+## Docker Setup 🐋
+From the project root, run:
+
+```commandline
+docker compose up --build
+```
 
 ## Quick start
 
@@ -21,7 +37,6 @@ python backend/database/reset_db.py
 # Run Both Frontend and Backend
 Terminal 1:
 ```
-
 uvicorn backend.api.main:app --reload
 ```
 
@@ -33,6 +48,7 @@ npm run dev
 
 
 ## Root File Structure
+```
 ├── docs/
 │   ├── erd.png
 │   ├── data-dictionary.docx
@@ -41,7 +57,8 @@ npm run dev
 │   └── demo.py
 │   └── test_db.py
 ├── README.md
-
+├── docker-compose.yml 🐋
+```
 
 ## Backend File Structure
 ```
@@ -66,7 +83,6 @@ root/
 ```
 ## Frontend File Structure
 ```
-
 ├── frontend/
 │   ├── src/
 │   │   ├── api/
