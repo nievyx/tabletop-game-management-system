@@ -71,17 +71,21 @@ def delete_db(safe_mode=True):
         bool: True if successful, False otherwise
     """
     if not os.path.exists(DB_PATH):
-        logger.info('No existing database found. Skipping delete')
+        logger.debug('No existing database found. Skipping delete')
         return False
-    
+
     if safe_mode and not confirm_delete():
-        print('Delete Cancelled.')
+        logger.info('Delete Cancelled.')
         return False
-     
+
     # Delete Database
-    os.remove(DB_PATH)
-    print(f'{DB_PATH} deleted!')
-    return True
+    try:
+        os.remove(DB_PATH)
+        logger.info(f'{DB_PATH} deleted!')
+        return True
+    except OSError as e:
+        logger.error(f'Failed to delete database: {e}')
+        return False
 
 def reset_db(safe_mode=True):
     """Deletes the existing database (if present)
