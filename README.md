@@ -65,7 +65,7 @@ npm run dev
 root/
 
 ├── backend/
-│   ├── api/
+│   ├── app/
 │   │   ├── main.py
 │   │   ├── routes/
 │   │   │   ├── users.py

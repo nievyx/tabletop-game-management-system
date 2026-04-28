@@ -1,20 +1,20 @@
 """
-Application configuration module.
-
-This file centralises all configuration logic for the backend application,
-including environment variables, database paths, and shared settings.
-
-Purpose:
-- Provide a single source of truth for configuration values
-- Improve maintainability and scalability
-- Avoid hardcoding values across the codebase
-
-Typical usage:
-- Load environment variables (.env)
-- Define database connection paths/URLs
-- Store global constants used across the application
-
-Example:
-    from backend.core.config import settings
-    db_path = settings.DB_PATH
+Application settings module.
+Handles environments variables and shard settings.
 """
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+class Settings:
+    """Centralised settings class"""
+
+    DB_PATH = os.path.join(BASE_DIR, 'backend', 'database', 'app.db')
+    ENV = os.getenv('ENV', 'development')
+    API_URL = os.getenv('API_URL', 'http://localhost:8000')
+
+settings = Settings()

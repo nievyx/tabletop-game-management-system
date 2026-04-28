@@ -1,11 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from dotenv import load_dotenv
+from backend.core.config import settings # NOTE: loads env
 from backend.app.routes import health, users, profiles, characters
 import os
 
-load_dotenv()
 
 app = FastAPI()
 
