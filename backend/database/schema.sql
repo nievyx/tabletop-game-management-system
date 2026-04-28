@@ -27,7 +27,7 @@ CREATE TABLE players (
 CREATE TABLE classes (
     class_id INTEGER PRIMARY KEY AUTOINCREMENT,
     class_name TEXT NOT NULL UNIQUE
-        CHECK (length(class_name) <= 255),
+        CHECK (length(class_name) <= 50),
     description TEXT
 );
 
@@ -76,7 +76,8 @@ CREATE TABLE difficulties (
 CREATE TABLE characters (
     character_id INTEGER PRIMARY KEY AUTOINCREMENT,
     player_id INTEGER NOT NULL,
-    character_name TEXT NOT NULL,
+    character_name TEXT NOT NULL
+        CHECK (length(character_name) <= 100),
     character_type TEXT NOT NULL
         CHECK (character_type IN ('Player', 'NPC')),
     class_id INTEGER NOT NULL,

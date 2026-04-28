@@ -18,7 +18,7 @@ Run from project root:
 python backend/database/reset_db.py
 ```
 
-## How to run API ( Windows / Powershell)
+## How to run API ( Windows / PowerShell)
 
 Run from project root:
 ```bash
