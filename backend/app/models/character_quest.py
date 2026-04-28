@@ -7,11 +7,12 @@ class CharacterQuestBase(BaseModel):
     completion_date: datetime | None = None
 
 class CharacterQuestCreate(CharacterQuestBase):
-    pass
+    character_id: int
+    quest_id: int
 
 class CharacterQuestUpdate(BaseModel):
-    character_id: int | None = None
-    quest_id: int | None = None
+    # character_id: int | None = None
+    # quest_id: int | None = None
     completion_date: datetime | None = None
 
 class CharacterQuestRead(CharacterQuestBase):
