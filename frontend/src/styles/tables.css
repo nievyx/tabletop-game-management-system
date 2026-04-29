@@ -21,9 +21,9 @@ tr {
 }
 
 
-.sub-table {
-    transform: scale(0.95);
-}
+/*.sub-table {*/
+/*    transform: scale(0.95);*/
+/*}*/
 
 .sub-table {
     width: 100%;

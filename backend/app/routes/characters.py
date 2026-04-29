@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from backend.database.db import get_db
 from backend.app.models.character import CharacterCreate
 from backend.database.db import query_all
 
 router = APIRouter(prefix='/characters',tags=['Characters'])
+
+# ===== READ ALL =====
 
 @router.get('/')
 def get_characters():
@@ -25,6 +27,8 @@ def get_characters():
         ORDER BY c.character_id;
     """)
     return rows
+
+# ===== READ =====
 
 @router.get('/{character_id}')
 def get_character(character_id: int):
@@ -51,10 +55,13 @@ def get_character(character_id: int):
 
     return rows[0]
 
+# ===== CREATE =====
+
 @router.post('/')
-def create_character(character: CharacterCreate):
+def create_character(character: CharacterCreate, db=Depends(get_db)):
     try:
-        query = '''
+        cursor = db.execute(
+        '''
         INSERT INTO characters (
             player_id,
             character_name,
@@ -65,9 +72,8 @@ def create_character(character: CharacterCreate):
             level
         )
         VALUES (?, ?, ?, ?, ?, ?, ?)
-        '''
-
-        params = (
+        ''',
+        (
             character.player_id,
             character.character_name,
             character.character_type,
@@ -75,10 +81,9 @@ def create_character(character: CharacterCreate):
             character.species_id,
             character.alignment_id,
             character.level
+            )
         )
 
-        db = get_db()
-        cursor = db.execute(query, params)
         db.commit()
 
         return {
@@ -89,4 +94,16 @@ def create_character(character: CharacterCreate):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+# ===== SEARCH =====
 
+@router.get('/search')
+def search_character(name: str, db=Depends(get_db)):
+    rows = db.excute(
+        'SELECT * FROM characters WHERE character_name LIKE ?',
+        (f'%{name}%',)
+    ).fetchall()
+
+    return [dict(rows) for rows in rows]
+
+# ===== DELETE =====
+# TODO: Not implemented

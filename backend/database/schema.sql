@@ -76,10 +76,8 @@ CREATE TABLE difficulties (
 CREATE TABLE characters (
     character_id INTEGER PRIMARY KEY AUTOINCREMENT,
     player_id INTEGER NOT NULL,
-    character_name TEXT NOT NULL
-        CHECK (length(character_name) <= 100),
-    character_type TEXT NOT NULL
-        CHECK (character_type IN ('Player', 'NPC')),
+    character_name TEXT NOT NULL CHECK (length(character_name) <= 100),
+    character_type TEXT NOT NULL CHECK (character_type IN ('Player', 'NPC')),
     class_id INTEGER NOT NULL,
     species_id INTEGER NOT NULL,
     alignment_id INTEGER NOT NULL,
@@ -108,10 +106,10 @@ CREATE TABLE inventory (
     item_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity >= 1),
 
+    UNIQUE (character_id, item_id)
+
     FOREIGN KEY (character_id) REFERENCES characters(character_id),
     FOREIGN KEY (item_id) REFERENCES items(item_id),
-
-    UNIQUE (character_id, item_id)
 );
 
 CREATE TABLE quests (

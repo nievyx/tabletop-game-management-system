@@ -20,8 +20,8 @@ def create_user(user: UserCreate, db : sqlite3.Connection = Depends(get_db)):
     hashed_password = hash_password(user.password_hash) # NOTE: Placeholder
 
     cursor = db.execute(
-        'INSERT INTO users (email, display_name, password_hash) VALUES (?, ?, ?)',
-    (user.username, user.email, hashed_password)
+        'INSERT INTO players (email, display_name, password_hash) VALUES (?, ?, ?)',
+    (user.email, user.username, hashed_password)
     )
     db.commit()
     return {'user_id': cursor.lastrowid}
