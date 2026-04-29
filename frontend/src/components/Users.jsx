@@ -9,7 +9,7 @@ function Users() {
     const [editingUser, setEditingUser] = useState(null);
     const [form, setForm] = useState({username: '', email: ''});
 
-    // LOAD USERS
+    // LOAD USERS #NOTE: this is also in api/client.js now
     async function loadUsers() {
         const data = await get('/users/');
         setUsers(data);

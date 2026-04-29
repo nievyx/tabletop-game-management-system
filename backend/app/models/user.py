@@ -5,10 +5,10 @@ class UserCreate(BaseModel):
     email: str
     password_hash: str
 
-class UserUpdate(UserCreate):
-    username: str
-    email: str
-    password_hash: str
+class UserUpdate(BaseModel):
+    username: str | None = None
+    email: str | None = None
+    password_hash: str | None = None
 
 class UserOut(BaseModel):
     user_id: int

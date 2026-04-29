@@ -39,3 +39,7 @@ export function del(endpoint) {
         method: 'DELETE',
     });
 }
+
+export async function getUsers() {
+    return get('/users/');
+}

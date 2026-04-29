@@ -1,7 +1,8 @@
 // CHARACTER CRUDs
 
-import {  get, post, put, del } from '../api/client';
+import {  get, post, put, del, getUsers } from '../api/client';
 import { useEffect, useState} from "react";
+
 
 const PREFIX = '/characters/'
 
@@ -175,23 +176,23 @@ function Characters() {
                     </select>
 
                     {/* TODO: Fix Player ID */}
-                    <input
-                        type="number"
-                        value={form.player_id}
-                        onChange={(e) => setForm({ ...form, player_id: e.target.value })}
-                        placeholder="Player ID"
-                        min="1"
-                        required
-                    />
-                    
-                    {/* Player ID */}
-                    {/*<select*/}
+                    {/*<input*/}
+                    {/*    type="number"*/}
                     {/*    value={form.player_id}*/}
                     {/*    onChange={(e) => setForm({ ...form, player_id: e.target.value })}*/}
+                    {/*    placeholder="Player ID"*/}
+                    {/*    min="1"*/}
+                    {/*    required*/}
+                    {/*/>*/}
+
+                    {/* Player ID */}
+                    {/*<select*/}
+                    {/*    value={form.user_id}*/}
+                    {/*    onChange={(e) => setForm({ ...form, user_id: e.target.value })}*/}
                     {/*>*/}
-                    {/*    {players.map((player) => (*/}
-                    {/*        <option key={player.player_id} value={player.player_id}>*/}
-                    {/*            {player.display_name}*/}
+                    {/*    {users.map((user) => (*/}
+                    {/*        <option key={user.user_id} value={user.user_id}>*/}
+                    {/*            {user.display_name}*/}
                     {/*        </option>*/}
                     {/*    ))}*/}
                     {/*</select>*/}
