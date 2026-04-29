@@ -161,97 +161,147 @@ function Characters() {
             {/* FORM */}
             <div className="glass">
                 <form onSubmit={handleSubmit}>
+
                     { editingCharacter ? 'Update Character : ' : 'Add character : ' }
 
-                    {/* Character Name */}
-                    <input
-                        value={form.character_name}
-                        onChange={(e) =>
-                            setForm({ ...form, character_name: e.target.value })
-                        }
-                        placeholder="Character Name"
-                    />
+                    <table className="sub-table">
+                        <thead>
+                        <tr>
+                        <th>Character Name</th>
+                        <th>Type</th>
+                        <th>Player</th>
+                        <th>Class</th>
+                        <th>Species</th>
+                        <th>Alignment</th>
+                        <th>Level</th>
 
-                    {/* Character Type */}
-                    <select
-                        value={form.character_type}
-                            onChange={(e) =>
-                                setForm({ ...form, character_type: e.target.value })}
-                            >
-                        <option value="Player">Player</option>
-                        <option value="NPC">NPC</option>
-                    </select>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {/*  */}
+                            <td>
+                                {/* Character Name */}
+                                <input
+                                    value={form.character_name}
+                                    onChange={(e) =>
+                                        setForm({ ...form, character_name: e.target.value })
+                                    }
+                                    placeholder="Character Name"
+                                />
 
-                    {/* Player ID Non-dynamic */}
-                    {/*<input*/}
-                    {/*    type="number"*/}
-                    {/*    value={form.player_id}*/}
-                    {/*    onChange={(e) => setForm({ ...form, player_id: e.target.value })}*/}
-                    {/*    placeholder="Player ID"*/}
-                    {/*    min="1"*/}
-                    {/*    required*/}
-                    {/*/>*/}
+                            </td>
+                            {/*  */}
+                            <td>
+                                {/* Character Type */}
+                                <select
+                                    value={form.character_type}
+                                    onChange={(e) =>
+                                        setForm({ ...form, character_type: e.target.value })}
+                                >
+                                    <option value="Player">Player</option>
+                                    <option value="NPC">NPC</option>
+                                </select>
 
-                    {/* Player Account */}
-                    <select
-                        value={form.player_id}
-                        onChange={(e) =>
-                            setForm({ ...form, player_id: e.target.value })}
-                        required
-                    >
-                        <option value="">Select Player account</option>
+                            </td>
 
-                        {players.map((player) => (
-                            <option key={player.user_id} value={player.user_id}>
-                                {player.username ?? player.email}
-                            </option>
-                        ))}
-                    </select>
 
-                    {/* Class ID */}
-                    <input
-                        value={form.class_id}
-                        onChange={(e) =>
-                            setForm({ ...form, class_id: e.target.value })}
-                        placeholder="Class ID"
-                        type='number'
-                        min = '1'
-                        required
-                    />
 
-                    {/* Species ID */}
-                    <input
-                        value={form.species_id}
-                        onChange={(e) =>
-                            setForm({ ...form, species_id: e.target.value })}
-                        placeholder="Species ID"
-                        type="number"
-                        min = '1'
-                        required
-                    />
+                            {/*  */}
+                            <td>
+                                {/* Player Account */}
+                                <select
+                                    value={form.player_id}
+                                    onChange={(e) =>
+                                        setForm({ ...form, player_id: e.target.value })}
+                                    required
+                                >
+                                    <option value="">Select Player account</option>
 
-                    {/* Alignment ID */}
-                    <input
-                        value={form.alignment_id}
-                        onChange={(e) =>
-                            setForm({ ...form, alignment_id: e.target.value })}
-                        placeholder="Alignment ID"
-                        type="number"
-                        min="1"
-                        required
-                    />
+                                    {players.map((player) => (
+                                        <option key={player.user_id} value={player.user_id}>
+                                            {player.username ?? player.email}
+                                        </option>
+                                    ))}
+                                </select>
+                            </td>
+                            {/*  */}
+                            <td>
+                                {/* Class ID */}
+                                <input
+                                    value={form.class_id}
+                                    onChange={(e) =>
+                                        setForm({ ...form, class_id: e.target.value })}
+                                    placeholder="Class ID"
+                                    type='number'
+                                    min = '1'
+                                    required
+                                />
+                            </td>
+                            {/*  */}
+                            <td>
+                                {/* Species ID */}
+                                <input
+                                    value={form.species_id}
+                                    onChange={(e) =>
+                                        setForm({ ...form, species_id: e.target.value })}
+                                    placeholder="Species ID"
+                                    type="number"
+                                    min = '1'
+                                    required
+                                />
+                            </td>
+                            {/*  */}
+                            <td>
 
-                   {/* Level */}
-                    <input
-                        type="number"
-                        value={form.level}
-                        onChange={(e) =>
-                            setForm({ ...form, level: e.target.value })
-                        }
-                        placeholder="Level"
-                        min='1'
-                        required
-                    />
+                                {/* Alignment ID */}
+                                <input
+                                    value={form.alignment_id}
+                                    onChange={(e) =>
+                                        setForm({ ...form, alignment_id: e.target.value })}
+                                    placeholder="Alignment ID"
+                                    type="number"
+                                    min="1"
+                                    required
+                                />
+                            </td>
+                            {/*  */}
+                            <td>
+
+                                {/* Level */}
+                                <input
+                                    type="number"
+                                    value={form.level}
+                                    onChange={(e) =>
+                                        setForm({ ...form, level: e.target.value })
+                                    }
+                                    placeholder="Level"
+                                    min='1'
+                                    required
+                                />
+                            {/*</td>*/}
+                            {/*/!*  *!/*/}
+                            {/*<td>*/}
+                            {/*    /!* Content here*!/*/}
+                            {/*</td>*/}
+                            {/*/!*  *!/*/}
+                            {/*<td>*/}
+                            {/*    /!* Content here*!/*/}
+                            {/*</td>*/}
+                            {/*/!*  *!/*/}
+                            {/*<td>*/}
+                            {/*    /!* Content here*!/*/}
+                            {/*</td>*/}
+
+                            </td></tr>
+                        </tbody>
+                    </table>
+
+
+
+
+
+
 
 
                     <button className='update' type='submit'>
@@ -264,41 +314,3 @@ function Characters() {
 }
 
 export default Characters;
-
-// Old character table
-
-// Characters
-// function Characters({ characters, loadingCharacters }) {
-//     return (<section className="card">
-//         <h2>Characters</h2>
-
-//         {loadingCharacters ? (
-//             <p>Loading characters...</p>
-//         ) : characters.length === 0 ? (
-//             <p>No characters found</p>
-//         ) : (
-//             <table>
-//                 <thead>
-//                 <tr>
-//                     <th>ID</th>
-//                     <th>Name</th>
-//                     <th>Level</th>
-//                     <th>Class</th>
-//                 </tr>
-//                 </thead>
-//                 <tbody>
-//                 {characters.map((character) => (
-//                     <tr key={character.id}>
-//                         <td>{character.id}</td>
-//                         <td>{character.display_name}</td>
-//                         <td>{character.level}</td>
-//                         <td>{character.class_name}</td>
-//                     </tr>
-//                 ))}
-//                 </tbody>
-//             </table>
-//         )}
-//     </section>)
-// }
-
-// export default Characters;

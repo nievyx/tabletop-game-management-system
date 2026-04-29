@@ -58,7 +58,7 @@ function App () {
 
           {/* Backend Status Block */}
           <main className="content">
-            <section className="card">
+            <section className="">
               <h2>Backend Status</h2>
               <p>{status}</p>
               {error && <p> Error: {error}</p>}
