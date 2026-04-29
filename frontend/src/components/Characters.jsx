@@ -204,9 +204,6 @@ function Characters() {
                                 </select>
 
                             </td>
-
-
-
                             {/*  */}
                             <td>
                                 {/* Player Account */}
@@ -228,42 +225,42 @@ function Characters() {
                             {/*  */}
                             <td>
                                 {/* Class ID */}
-                                <input
+                                <select
                                     value={form.class_id}
                                     onChange={(e) =>
                                         setForm({ ...form, class_id: e.target.value })}
-                                    placeholder="Class ID"
-                                    type='number'
-                                    min = '1'
-                                    required
-                                />
+                                >
+                                    <option value={1}>Plasma Knight</option>
+                                    <option value={2}>Void Ranger</option>
+                                    <option value={3}>Star Pilot</option>
+                                </select>
                             </td>
                             {/*  */}
                             <td>
                                 {/* Species ID */}
-                                <input
+                                <select
                                     value={form.species_id}
                                     onChange={(e) =>
                                         setForm({ ...form, species_id: e.target.value })}
-                                    placeholder="Species ID"
-                                    type="number"
-                                    min = '1'
-                                    required
-                                />
+                                >
+                                    <option value={1}>Human</option>
+                                    <option value={2}>Synth</option>
+                                    <option value={3}>Lunari</option>
+                                </select>
                             </td>
                             {/*  */}
                             <td>
 
                                 {/* Alignment ID */}
-                                <input
+                                <select
                                     value={form.alignment_id}
                                     onChange={(e) =>
                                         setForm({ ...form, alignment_id: e.target.value })}
-                                    placeholder="Alignment ID"
-                                    type="number"
-                                    min="1"
-                                    required
-                                />
+                                >
+                                    <option value={1}>Lawful Good</option>
+                                    <option value={2}>Neutral</option>
+                                    <option value={3}>Chaotic Neutral</option>
+                                </select>
                             </td>
                             {/*  */}
                             <td>
@@ -296,14 +293,6 @@ function Characters() {
                             </td></tr>
                         </tbody>
                     </table>
-
-
-
-
-
-
-
-
                     <button className='update' type='submit'>
                         { editingCharacter ? 'Save' : 'Add character' }
                     </button>
