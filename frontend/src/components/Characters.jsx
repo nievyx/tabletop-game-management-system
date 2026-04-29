@@ -10,6 +10,7 @@ const PREFIX = '/characters/'
 function Characters() {
     const [characters, setCharacters] = useState([]);
     const [editingCharacter, setEditingCharacter] = useState(null);
+    const [users, setUsers] = useState([]);
 
     const [form, setForm] = useState({
         player_id: 1,
@@ -26,9 +27,15 @@ function Characters() {
         const data = await get(PREFIX);
         setCharacters(data);
     }
+    // LOAD PROFILES (USERS)
+    async function loadUsers() {
+        const data = await getUsers();
+        setUsers(data);
+    }
 
     useEffect(() => {
         loadCharacters().catch(console.error)
+        loadUsers().catch(console.error);
     }, []);
 
     function resetForm() {
@@ -160,7 +167,7 @@ function Characters() {
                     <input
                         value={form.character_name}
                         onChange={(e) =>
-                            setForm({ ...form, display_name: e.target.value })
+                            character_name
                         }
                         placeholder="Character Name"
                     />
@@ -175,7 +182,7 @@ function Characters() {
                         <option value="NPC">NPC</option>
                     </select>
 
-                    {/* TODO: Fix Player ID */}
+                    {/* Player ID Non-dynamic */}
                     {/*<input*/}
                     {/*    type="number"*/}
                     {/*    value={form.player_id}*/}
@@ -186,16 +193,16 @@ function Characters() {
                     {/*/>*/}
 
                     {/* Player ID */}
-                    {/*<select*/}
-                    {/*    value={form.user_id}*/}
-                    {/*    onChange={(e) => setForm({ ...form, user_id: e.target.value })}*/}
-                    {/*>*/}
-                    {/*    {users.map((user) => (*/}
-                    {/*        <option key={user.user_id} value={user.user_id}>*/}
-                    {/*            {user.display_name}*/}
-                    {/*        </option>*/}
-                    {/*    ))}*/}
-                    {/*</select>*/}
+                    <select
+                        value={form.user_id}
+                        onChange={(e) => setForm({ ...form, user_id: e.target.value })}
+                    >
+                        {users.map((user) => (
+                            <option key={user.user_id} value={user.user_id}>
+                                {user.display_name}
+                            </option>
+                        ))}
+                    </select>
 
                     {/* Class ID */}
                     <input
