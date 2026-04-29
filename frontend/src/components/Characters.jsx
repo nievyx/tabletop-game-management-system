@@ -10,7 +10,7 @@ const PREFIX = '/characters/'
 function Characters() {
     const [characters, setCharacters] = useState([]);
     const [editingCharacter, setEditingCharacter] = useState(null);
-    const [users, setUsers] = useState([]);
+    const [players, setPlayers] = useState([]);
 
     const [form, setForm] = useState({
         player_id: 1,
@@ -27,10 +27,10 @@ function Characters() {
         const data = await get(PREFIX);
         setCharacters(data);
     }
-    // LOAD PROFILES (USERS)
+    // LOAD PLAYERS ACCOUNTS (NOTE: NAMED USERS IN BACKEND)
     async function loadUsers() {
         const data = await getUsers();
-        setUsers(data);
+        setPlayers(data);
     }
 
     useEffect(() => {
@@ -89,7 +89,7 @@ function Characters() {
                 await post(PREFIX, payload);
             }
 
-            setForm({display_name: '', level: ''});
+            resetForm();
             setEditingCharacter(null);
             await loadCharacters();
 
@@ -144,9 +144,9 @@ function Characters() {
                             <td>{character.id}</td>
                             <td>{character.character_name}</td>
                             <td>{character.character_type}</td>
-                            <td>{character.class_id}</td>
-                            <td>{character.species_id}</td>
-                            <td>{character.alignment_id}</td>
+                            <td>{character.class_name}</td>
+                            <td>{character.species_name}</td>
+                            <td>{character.alignment_name}</td>
                             <td>{character.level}</td>
                             <td>
                                 <button className='edit' onClick={() => handleEdit(character)}>Edit</button>
@@ -167,14 +167,14 @@ function Characters() {
                     <input
                         value={form.character_name}
                         onChange={(e) =>
-                            character_name
+                            setForm({ ...form, character_name: e.target.value })
                         }
                         placeholder="Character Name"
                     />
 
-                    {/* Class ID */}
+                    {/* Character Type */}
                     <select
-                        value={form.class_id}
+                        value={form.character_type}
                             onChange={(e) =>
                                 setForm({ ...form, character_type: e.target.value })}
                             >
@@ -192,14 +192,18 @@ function Characters() {
                     {/*    required*/}
                     {/*/>*/}
 
-                    {/* Player ID */}
+                    {/* Player Account */}
                     <select
-                        value={form.user_id}
-                        onChange={(e) => setForm({ ...form, user_id: e.target.value })}
+                        value={form.player_id}
+                        onChange={(e) =>
+                            setForm({ ...form, player_id: e.target.value })}
+                        required
                     >
-                        {users.map((user) => (
-                            <option key={user.user_id} value={user.user_id}>
-                                {user.display_name}
+                        <option value="">Select Player account</option>
+
+                        {players.map((player) => (
+                            <option key={player.user_id} value={player.user_id}>
+                                {player.username ?? player.email}
                             </option>
                         ))}
                     </select>
@@ -207,8 +211,10 @@ function Characters() {
                     {/* Class ID */}
                     <input
                         value={form.class_id}
-                        onChange={(e) => setForm({ ...form, class_name: e.target.value })}
+                        onChange={(e) =>
+                            setForm({ ...form, class_id: e.target.value })}
                         placeholder="Class ID"
+                        type='number'
                         min = '1'
                         required
                     />
@@ -219,7 +225,19 @@ function Characters() {
                         onChange={(e) =>
                             setForm({ ...form, species_id: e.target.value })}
                         placeholder="Species ID"
+                        type="number"
                         min = '1'
+                        required
+                    />
+
+                    {/* Alignment ID */}
+                    <input
+                        value={form.alignment_id}
+                        onChange={(e) =>
+                            setForm({ ...form, alignment_id: e.target.value })}
+                        placeholder="Alignment ID"
+                        type="number"
+                        min="1"
                         required
                     />
 
