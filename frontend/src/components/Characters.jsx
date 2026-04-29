@@ -9,10 +9,15 @@ const PREFIX = '/characters/'
 function Characters() {
     const [characters, setCharacters] = useState([]);
     const [editingCharacter, setEditingCharacter] = useState(null);
+
     const [form, setForm] = useState({
-        display_name:'',
-        level: '',
-        class_name:'',
+        player_id: 1,
+        character_name: '',
+        character_type: 'Player',
+        class_id: 1,
+        species_id: 1,
+        alignment_id: 1,
+        level: 1,
     });
 
     // LOAD CHARACTERS
@@ -25,14 +30,32 @@ function Characters() {
         loadCharacters().catch(console.error)
     }, []);
 
+    function resetForm() {
+        setForm({
+            player_id: 1,
+            character_name: '',
+            character_type: 'Player',
+            class_id: 1,
+            species_id: 1,
+            alignment_id: 1,
+            level: 1,
+        });
+    }
+
     // EDIT
     function handleEdit(character) {
-        console.log('Editing character', character);  //DEBUG
         setEditingCharacter(character.id);
+        console.log('Editing character', character);  //DEBUG
+
+
         setForm({
-            display_name: character.display_name,
-            level: character.level,
-            class_name: character.class_name,
+            player_id: character.player_id ?? 1,
+            character_name: character.character_name ?? '',
+            character_type: character.character_type ?? 'Player',
+            class_id: character.class_id ?? 1,
+            species_id: character.species_id ?? 1,
+            alignment_id: character.alignment_id ?? 1,
+            level: character.level ?? 1,
         });
     }
 
@@ -42,8 +65,13 @@ function Characters() {
         console.log('Adding character');  //TODO : DEBUG
 
         const payload = {
-            ...form,
-            password_hash: 'demo_hash'
+            player_id: Number(form.player_id),
+            character_name: form.character_name,
+            character_type: form.character_type,
+            class_id: Number(form.class_id),
+            species_id: Number(form.species_id),
+            alignment_id: Number(form.alignment_id),
+            level: Number(form.level),
         };
 
         try {
@@ -55,9 +83,10 @@ function Characters() {
 
             setForm({display_name: '', level: ''});
             setEditingCharacter(null);
-            loadCharacters();
+            await loadCharacters();
 
         } catch (err) {
+            console.log(err);
             alert('Something went wrong!');
         }
 
@@ -66,7 +95,7 @@ function Characters() {
 
     // DELETE
     async function handleDelete(character) {
-        if (!window.confirm(`Are you sure you want to delete character: ${character.display_name}`)) return;
+        if (!window.confirm(`Are you sure you want to delete character: ${character.character_name}?`)) return;
 
 
         try {
@@ -90,9 +119,12 @@ function Characters() {
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Display Name</th>
-                        <th>Level</th>
+                        <th>Character Name</th>
+                        <th>Type</th>
                         <th>Class</th>
+                        <th>Species</th>
+                        <th>Alignment</th>
+                        <th>Level</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -102,9 +134,12 @@ function Characters() {
                     {characters.map((character) => (
                         <tr key={character.id}>
                             <td>{character.id}</td>
-                            <td>{character.display_name}</td>
+                            <td>{character.character_name}</td>
+                            <td>{character.character_type}</td>
+                            <td>{character.class_id}</td>
+                            <td>{character.species_id}</td>
+                            <td>{character.alignment_id}</td>
                             <td>{character.level}</td>
-                            <td>{character.class_name}</td>
                             <td>
                                 <button className='edit' onClick={() => handleEdit(character)}>Edit</button>
                                 <button className='delete' onClick={() => handleDelete(character)}>Delete</button>
@@ -119,27 +154,67 @@ function Characters() {
             <div className="glass">
                 <form onSubmit={handleSubmit}>
                     { editingCharacter ? 'Update Character : ' : 'Add character : ' }
+
+                    {/* Character Name */}
                     <input
-                        value={form.display_name}
+                        value={form.character_name}
                         onChange={(e) =>
                             setForm({ ...form, display_name: e.target.value })
                         }
-                        placeholder="Display Name"
+                        placeholder="Character Name"
                     />
 
+                    {/* Class ID */}
+                    <select value={form.class_id}
+                            onChange={(e) =>
+                                setForm({ ...form, character_type: e.target.value })}
+                            >
+                        <option value="Player">Player</option>
+                        <option value="Character">Character</option>
+                    </select>
+
+                    {/* TODO: ADD dynamic / load player to add too */}
+                    {/* Player ID */}
                     <input
+                        type="number"
+                        value={form.player_id}
+                        onChange={(e) =>
+                            setForm({ ...form, player_id: e.target.value })
+                        }
+                        placeholder="Player_id"
+                    />
+
+                    {/* Class ID */}
+                    <input
+                        value={form.class_id}
+                        onChange={(e) => setForm({ ...form, class_name: e.target.value })}
+                        placeholder="Class ID"
+                        min = '1'
+                        required
+                    />
+
+                    {/* Species ID */}
+                    <input
+                        value={form.species_id}
+                        onChange={(e) =>
+                            setForm({ ...form, species_id: e.target.value })}
+                        placeholder="Species ID"
+                        min = '1'
+                        required
+                    />
+
+                   {/* Level */}
+                    <input
+                        type="number"
                         value={form.level}
                         onChange={(e) =>
                             setForm({ ...form, level: e.target.value })
                         }
                         placeholder="Level"
+                        min='1'
+                        required
                     />
 
-                    <input
-                        value={form.class_name}
-                        onChange={(e) => setForm({ ...form, class_name: e.target.value })}
-                        placeholder="Class"
-                    />
 
                     <button className='update' type='submit'>
                         { editingCharacter ? 'Save' : 'Add character' }

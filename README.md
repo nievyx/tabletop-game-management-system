@@ -37,9 +37,12 @@ python backend/database/reset_db.py
 # Run Both Frontend and Backend
 Terminal 1:
 ```
-uvicorn backend.api.main:app --reload
+uvicorn backend.app.main:app --reload
 ```
-
+or
+```
+python -m backend.app
+```
 Terminal 2:
 ```
 cd frontend
