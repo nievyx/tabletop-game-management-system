@@ -165,24 +165,36 @@ function Characters() {
                     />
 
                     {/* Class ID */}
-                    <select value={form.class_id}
+                    <select
+                        value={form.class_id}
                             onChange={(e) =>
                                 setForm({ ...form, character_type: e.target.value })}
                             >
                         <option value="Player">Player</option>
-                        <option value="Character">Character</option>
+                        <option value="NPC">NPC</option>
                     </select>
 
-                    {/* TODO: ADD dynamic / load player to add too */}
-                    {/* Player ID */}
+                    {/* TODO: Fix Player ID */}
                     <input
                         type="number"
                         value={form.player_id}
-                        onChange={(e) =>
-                            setForm({ ...form, player_id: e.target.value })
-                        }
-                        placeholder="Player_id"
+                        onChange={(e) => setForm({ ...form, player_id: e.target.value })}
+                        placeholder="Player ID"
+                        min="1"
+                        required
                     />
+                    
+                    {/* Player ID */}
+                    {/*<select*/}
+                    {/*    value={form.player_id}*/}
+                    {/*    onChange={(e) => setForm({ ...form, player_id: e.target.value })}*/}
+                    {/*>*/}
+                    {/*    {players.map((player) => (*/}
+                    {/*        <option key={player.player_id} value={player.player_id}>*/}
+                    {/*            {player.display_name}*/}
+                    {/*        </option>*/}
+                    {/*    ))}*/}
+                    {/*</select>*/}
 
                     {/* Class ID */}
                     <input

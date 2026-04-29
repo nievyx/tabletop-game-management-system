@@ -14,35 +14,40 @@ def hash_password(password: str) -> str:
 # ==============================
 
 # ===== CREATE =====
-# POST /users/
 
 @router.post('/')
 def create_user(user: UserCreate, db : sqlite3.Connection = Depends(get_db)):
     hashed_password = hash_password(user.password_hash) # NOTE: Placeholder
 
     cursor = db.execute(
-        'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
+        'INSERT INTO users (email, display_name, password_hash) VALUES (?, ?, ?)',
     (user.username, user.email, hashed_password)
     )
     db.commit()
     return {'user_id': cursor.lastrowid}
 
 # ===== READ =====
-# GET /users/
 
 @router.get('/')
 def get_users(db: sqlite3.Connection = Depends(get_db)):
-    rows = db.execute('SELECT * FROM users').fetchall()
+    rows = db.execute('''
+        SELECT 
+            player_id AS user_id,
+            email,
+            display_name AS username,
+            date_created
+        FROM players
+    ''').fetchall()
+
     return [dict(row) for row in rows]
 
 
 # ===== UPDATE =====
-# PUT /users/{user_id}
 
 @router.put('/{user_id}')
 def update_user(user_id: int, user: UserUpdate, db: sqlite3.Connection = Depends(get_db)):
     cursor = db.execute(
-        'UPDATE users SET username = ?, email = ? WHERE user_id = ?',
+        'UPDATE users SET display_name = ?, email = ? WHERE player_id = ?',
         (user.username, user.email, user_id)
     )
     db.commit()
@@ -54,7 +59,6 @@ def update_user(user_id: int, user: UserUpdate, db: sqlite3.Connection = Depends
     return {'message': 'updated successfully'}
 
 # ===== DELETE =====
-# DELETE /users/{user_id}
 
 @router.delete('/{user_id}')
 def delete_user(user_id: int, db: sqlite3.Connection = Depends(get_db)):
