@@ -14,7 +14,7 @@ The application uses:
 > Project intentionally not using an ORM like SQL Alechemy nor Flask, due to extensive prior use of Flask-based frameworks. See project below for SQL database implementaion via ORM: 
 <https://github.com/nievyx/FlaskInventoryApp>
 
-> seed.sql setup with a space themed tabletop game alongside a DRM platform
+> seed.sql setup with a space themed tabletop game ~~alongside a DRM platform~~
 
 ## Docker Setup 🐋
 From the project root, run:
@@ -37,9 +37,12 @@ python backend/database/reset_db.py
 # Run Both Frontend and Backend
 Terminal 1:
 ```
-uvicorn backend.api.main:app --reload
+uvicorn backend.app.main:app --reload
 ```
-
+or
+```
+python -m backend.app
+```
 Terminal 2:
 ```
 cd frontend
@@ -121,7 +124,7 @@ root/
 This prototype currently inserts a temporary placeholder value for `password_hash`.
 
 ```python
-# routes/users.py
+# routes/players.py
  
 password_hash = "TEMP_HASH"
 

@@ -1,7 +1,8 @@
 // CHARACTER CRUDs
 
-import {  get, post, put, del } from '../api/client';
+import {  get, post, put, del, getPlayers } from '../api/client';
 import { useEffect, useState} from "react";
+
 
 const PREFIX = '/characters/'
 
@@ -9,10 +10,16 @@ const PREFIX = '/characters/'
 function Characters() {
     const [characters, setCharacters] = useState([]);
     const [editingCharacter, setEditingCharacter] = useState(null);
+    const [players, setPlayers] = useState([]);
+
     const [form, setForm] = useState({
-        display_name:'',
-        level: '',
-        class_name:'',
+        player_id: 1,
+        character_name: '',
+        character_type: 'Player',
+        class_id: 1,
+        species_id: 1,
+        alignment_id: 1,
+        level: 1,
     });
 
     // LOAD CHARACTERS
@@ -20,19 +27,43 @@ function Characters() {
         const data = await get(PREFIX);
         setCharacters(data);
     }
+    // LOAD PLAYERS ACCOUNTS
+    async function loadPlayers() {
+        const data = await getPlayers();
+        setPlayers(data);
+    }
 
     useEffect(() => {
         loadCharacters().catch(console.error)
+        loadPlayers().catch(console.error);
     }, []);
+
+    function resetForm() {
+        setForm({
+            player_id: 1,
+            character_name: '',
+            character_type: 'Player',
+            class_id: 1,
+            species_id: 1,
+            alignment_id: 1,
+            level: 1,
+        });
+    }
 
     // EDIT
     function handleEdit(character) {
-        console.log('Editing character', character);  //DEBUG
         setEditingCharacter(character.id);
+        console.log('Editing character', character);  //DEBUG
+
+
         setForm({
-            display_name: character.display_name,
-            level: character.level,
-            class_name: character.class_name,
+            player_id: character.player_id ?? 1,
+            character_name: character.character_name ?? '',
+            character_type: character.character_type ?? 'Player',
+            class_id: character.class_id ?? 1,
+            species_id: character.species_id ?? 1,
+            alignment_id: character.alignment_id ?? 1,
+            level: character.level ?? 1,
         });
     }
 
@@ -42,8 +73,13 @@ function Characters() {
         console.log('Adding character');  //TODO : DEBUG
 
         const payload = {
-            ...form,
-            password_hash: 'demo_hash'
+            player_id: Number(form.player_id),
+            character_name: form.character_name,
+            character_type: form.character_type,
+            class_id: Number(form.class_id),
+            species_id: Number(form.species_id),
+            alignment_id: Number(form.alignment_id),
+            level: Number(form.level),
         };
 
         try {
@@ -53,11 +89,12 @@ function Characters() {
                 await post(PREFIX, payload);
             }
 
-            setForm({display_name: '', level: ''});
+            resetForm();
             setEditingCharacter(null);
-            loadCharacters();
+            await loadCharacters();
 
         } catch (err) {
+            console.log(err);
             alert('Something went wrong!');
         }
 
@@ -66,7 +103,7 @@ function Characters() {
 
     // DELETE
     async function handleDelete(character) {
-        if (!window.confirm(`Are you sure you want to delete character: ${character.display_name}`)) return;
+        if (!window.confirm(`Are you sure you want to delete character: ${character.character_name}?`)) return;
 
 
         try {
@@ -90,9 +127,12 @@ function Characters() {
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Display Name</th>
-                        <th>Level</th>
+                        <th>Character Name</th>
+                        <th>Type</th>
                         <th>Class</th>
+                        <th>Species</th>
+                        <th>Alignment</th>
+                        <th>Level</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -102,9 +142,12 @@ function Characters() {
                     {characters.map((character) => (
                         <tr key={character.id}>
                             <td>{character.id}</td>
-                            <td>{character.display_name}</td>
-                            <td>{character.level}</td>
+                            <td>{character.character_name}</td>
+                            <td>{character.character_type}</td>
                             <td>{character.class_name}</td>
+                            <td>{character.species_name}</td>
+                            <td>{character.alignment_name}</td>
+                            <td>{character.level}</td>
                             <td>
                                 <button className='edit' onClick={() => handleEdit(character)}>Edit</button>
                                 <button className='delete' onClick={() => handleDelete(character)}>Delete</button>
@@ -118,29 +161,138 @@ function Characters() {
             {/* FORM */}
             <div className="glass">
                 <form onSubmit={handleSubmit}>
+
                     { editingCharacter ? 'Update Character : ' : 'Add character : ' }
-                    <input
-                        value={form.display_name}
-                        onChange={(e) =>
-                            setForm({ ...form, display_name: e.target.value })
-                        }
-                        placeholder="Display Name"
-                    />
 
-                    <input
-                        value={form.level}
-                        onChange={(e) =>
-                            setForm({ ...form, level: e.target.value })
-                        }
-                        placeholder="Level"
-                    />
+                    <table className="sub-table">
+                        <thead>
+                        <tr>
+                        <th>Character Name</th>
+                        <th>Type</th>
+                        <th>Player</th>
+                        <th>Class</th>
+                        <th>Species</th>
+                        <th>Alignment</th>
+                        <th>Level</th>
 
-                    <input
-                        value={form.class_name}
-                        onChange={(e) => setForm({ ...form, class_name: e.target.value })}
-                        placeholder="Class"
-                    />
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {/*  */}
+                            <td>
+                                {/* Character Name */}
+                                <input
+                                    value={form.character_name}
+                                    onChange={(e) =>
+                                        setForm({ ...form, character_name: e.target.value })
+                                    }
+                                    placeholder="Character Name"
+                                />
 
+                            </td>
+                            {/*  */}
+                            <td>
+                                {/* Character Type */}
+                                <select
+                                    value={form.character_type}
+                                    onChange={(e) =>
+                                        setForm({ ...form, character_type: e.target.value })}
+                                >
+                                    <option value="Player">Player</option>
+                                    <option value="NPC">NPC</option>
+                                </select>
+
+                            </td>
+                            {/*  */}
+                            <td>
+                                {/* Player Account */}
+                                <select
+                                    value={form.player_id}
+                                    onChange={(e) =>
+                                        setForm({ ...form, player_id: e.target.value })}
+                                    required
+                                >
+                                    <option value="">Select Player account</option>
+
+                                    {players.map((player) => (
+                                        <option key={player.player_id} value={player.player_id}>
+                                            {player.display_name ?? player.email}
+                                        </option>
+                                    ))}
+                                </select>
+                            </td>
+                            {/*  */}
+                            <td>
+                                {/* Class ID */}
+                                <select
+                                    value={form.class_id}
+                                    onChange={(e) =>
+                                        setForm({ ...form, class_id: e.target.value })}
+                                >
+                                    <option value={1}>Plasma Knight</option>
+                                    <option value={2}>Void Ranger</option>
+                                    <option value={3}>Star Pilot</option>
+                                </select>
+                            </td>
+                            {/*  */}
+                            <td>
+                                {/* Species ID */}
+                                <select
+                                    value={form.species_id}
+                                    onChange={(e) =>
+                                        setForm({ ...form, species_id: e.target.value })}
+                                >
+                                    <option value={1}>Human</option>
+                                    <option value={2}>Synth</option>
+                                    <option value={3}>Lunari</option>
+                                </select>
+                            </td>
+                            {/*  */}
+                            <td>
+
+                                {/* Alignment ID */}
+                                <select
+                                    value={form.alignment_id}
+                                    onChange={(e) =>
+                                        setForm({ ...form, alignment_id: e.target.value })}
+                                >
+                                    <option value={1}>Lawful Good</option>
+                                    <option value={2}>Neutral</option>
+                                    <option value={3}>Chaotic Neutral</option>
+                                </select>
+                            </td>
+                            {/*  */}
+                            <td>
+
+                                {/* Level */}
+                                <input
+                                    type="number"
+                                    value={form.level}
+                                    onChange={(e) =>
+                                        setForm({ ...form, level: e.target.value })
+                                    }
+                                    placeholder="Level"
+                                    min='1'
+                                    required
+                                />
+                            {/*</td>*/}
+                            {/*/!*  *!/*/}
+                            {/*<td>*/}
+                            {/*    /!* Content here*!/*/}
+                            {/*</td>*/}
+                            {/*/!*  *!/*/}
+                            {/*<td>*/}
+                            {/*    /!* Content here*!/*/}
+                            {/*</td>*/}
+                            {/*/!*  *!/*/}
+                            {/*<td>*/}
+                            {/*    /!* Content here*!/*/}
+                            {/*</td>*/}
+
+                            </td></tr>
+                        </tbody>
+                    </table>
                     <button className='update' type='submit'>
                         { editingCharacter ? 'Save' : 'Add character' }
                     </button>
@@ -151,41 +303,3 @@ function Characters() {
 }
 
 export default Characters;
-
-// Old character table
-
-// Characters
-// function Characters({ characters, loadingCharacters }) {
-//     return (<section className="card">
-//         <h2>Characters</h2>
-
-//         {loadingCharacters ? (
-//             <p>Loading characters...</p>
-//         ) : characters.length === 0 ? (
-//             <p>No characters found</p>
-//         ) : (
-//             <table>
-//                 <thead>
-//                 <tr>
-//                     <th>ID</th>
-//                     <th>Name</th>
-//                     <th>Level</th>
-//                     <th>Class</th>
-//                 </tr>
-//                 </thead>
-//                 <tbody>
-//                 {characters.map((character) => (
-//                     <tr key={character.id}>
-//                         <td>{character.id}</td>
-//                         <td>{character.display_name}</td>
-//                         <td>{character.level}</td>
-//                         <td>{character.class_name}</td>
-//                     </tr>
-//                 ))}
-//                 </tbody>
-//             </table>
-//         )}
-//     </section>)
-// }
-
-// export default Characters;

@@ -1,95 +1,136 @@
 PRAGMA foreign_keys = ON;
 
-CREATE TABLE users (
-    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    email TEXT NOT NULL UNIQUE,
+DROP TABLE IF EXISTS character_quests;
+DROP TABLE IF EXISTS inventory;
+DROP TABLE IF EXISTS quests;
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS characters;
+DROP TABLE IF EXISTS difficulties;
+DROP TABLE IF EXISTS regions;
+DROP TABLE IF EXISTS rarities;
+DROP TABLE IF EXISTS item_types;
+DROP TABLE IF EXISTS alignments;
+DROP TABLE IF EXISTS species;
+DROP TABLE IF EXISTS classes;
+DROP TABLE IF EXISTS players;
+
+CREATE TABLE players (
+    player_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT NOT NULL UNIQUE
+        CHECK (length(email) <= 255),
+    display_name TEXT NOT NULL UNIQUE
+        CHECK (length(display_name) <= 100),
     password_hash TEXT NOT NULL,
-    created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE auth_events (
-    event_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    event_type TEXT NOT NULL,
-    event_time DATETIME NOT NULL,
-    ip_hash TEXT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
-CREATE TABLE profiles (
-    profile_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    display_name TEXT NOT NULL, -- Displays names not unique, can be shared accross muliple accounts
-    created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE classes (
-    class_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    name TEXT NOT NULL UNIQUE, 
+    class_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    class_name TEXT NOT NULL UNIQUE
+        CHECK (length(class_name) <= 50),
+    description TEXT
+);
+
+CREATE TABLE species (
+    species_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    species_name TEXT NOT NULL UNIQUE
+        CHECK (length(species_name) <= 50),
+    description TEXT
+);
+
+CREATE TABLE alignments (
+    alignment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    alignment_name TEXT NOT NULL UNIQUE
+        CHECK (length(alignment_name) <= 50),
+    description TEXT
+);
+
+CREATE TABLE item_types (
+    item_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    type_name TEXT NOT NULL UNIQUE
+        CHECK (length(type_name) <= 50),
+    description TEXT
+);
+
+CREATE TABLE rarities (
+    rarity_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    rarity_name TEXT NOT NULL UNIQUE
+        CHECK (length(rarity_name) <= 50),
+    description TEXT
+);
+
+CREATE TABLE regions (
+    region_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    region_name TEXT NOT NULL UNIQUE
+        CHECK (length(region_name) <= 100),
+    description TEXT
+);
+
+CREATE TABLE difficulties (
+    difficulty_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    difficulty_name TEXT NOT NULL UNIQUE
+        CHECK (length(difficulty_name) <= 50),
     description TEXT
 );
 
 CREATE TABLE characters (
-    character_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    profile_id INTEGER NOT NULL, 
-    class_id INTEGER NOT NULL, 
-    level INTEGER NOT NUll DEFAULT 1 CHECK (level >= 1), -- Characters start at level 1 (Fail Safe)
-    FOREIGN KEY (profile_id) REFERENCES profiles(profile_id),
-    FOREIGN KEY (class_id) REFERENCES classes(class_id) 
+    character_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    player_id INTEGER NOT NULL,
+    character_name TEXT NOT NULL CHECK (length(character_name) <= 100),
+    character_type TEXT NOT NULL CHECK (character_type IN ('Player', 'NPC')),
+    class_id INTEGER NOT NULL,
+    species_id INTEGER NOT NULL,
+    alignment_id INTEGER NOT NULL,
+    level INTEGER NOT NULL DEFAULT 1 CHECK (level >= 1),
+
+    FOREIGN KEY (player_id) REFERENCES players(player_id),
+    FOREIGN KEY (class_id) REFERENCES classes(class_id),
+    FOREIGN KEY (species_id) REFERENCES species(species_id),
+    FOREIGN KEY (alignment_id) REFERENCES alignments(alignment_id)
+);
+
+CREATE TABLE items (
+    item_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_name TEXT NOT NULL UNIQUE,
+    description TEXT,
+    item_type_id INTEGER NOT NULL,
+    rarity_id INTEGER NOT NULL,
+
+    FOREIGN KEY (item_type_id) REFERENCES item_types(item_type_id),
+    FOREIGN KEY (rarity_id) REFERENCES rarities(rarity_id)
+);
+
+CREATE TABLE inventory (
+    inventory_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    character_id INTEGER NOT NULL,
+    item_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity >= 1),
+
+    UNIQUE (character_id, item_id)
+
+    FOREIGN KEY (character_id) REFERENCES characters(character_id),
+    FOREIGN KEY (item_id) REFERENCES items(item_id)
 );
 
 CREATE TABLE quests (
     quest_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL UNIQUE, 
-    difficulty TEXT NOT NULL CHECK (difficulty IN ('Easy', 'Medium','Hard'))
-    -- Difficulty levels stored as a constraint for simplicity.
-    -- ( This could be refactored into lookup table if more difficulty setting introduced  )
+    quest_name TEXT NOT NULL UNIQUE
+        CHECK (length(quest_name) <= 100),
+    region_id INTEGER NOT NULL,
+    difficulty_id INTEGER NOT NULL,
+
+    FOREIGN KEY (region_id) REFERENCES regions(region_id),
+    FOREIGN KEY (difficulty_id) REFERENCES difficulties(difficulty_id)
 );
 
 CREATE TABLE character_quests (
-    character_id INTEGER NOT NULL, 
-    quest_id INTEGER NOT NULL, 
-    status TEXT NOT NULL CHECK (status IN ('Completed', 'In Progress')),
-    started_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    completed_at DATE, -- NULL when in progress
-    PRIMARY KEY (character_id, quest_id),
-    CHECK (
-        (status = 'In Progress' AND completed_at IS NULL)
-        OR
-        (status = 'Completed' AND completed_at IS NOT NULL)
-    ),
+    character_quest_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    character_id INTEGER NOT NULL,
+    quest_id INTEGER NOT NULL,
+    completion_date DATETIME,
+
     FOREIGN KEY (character_id) REFERENCES characters(character_id),
-    FOREIGN KEY (quest_id) REFERENCES quests(quest_id)
-);
+    FOREIGN KEY (quest_id) REFERENCES quests(quest_id),
 
-CREATE TABLE asset_types (
-    asset_type_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    name TEXT NOT NULL UNIQUE
-);
-
-CREATE TABLE assets (
-    asset_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL UNIQUE,
-    asset_type_id INTEGER NOT NULL,
-    FOREIGN KEY (asset_type_id) REFERENCES asset_types(asset_type_id)
-);
-
-CREATE TABLE licenses (
-    license_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    asset_id INTEGER NOT NULL,
-    status TEXT NOT NULL CHECK (status IN ('Active', 'Expired')),
-    issued_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    expires_at DATE,
-    CHECK (
-        (status = 'Active' AND expires_at IS NULL)
-        OR
-        (status = 'Expired' AND expires_at IS NOT NULL)
-    ),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (asset_id) REFERENCES assets(asset_id),
-    UNIQUE (user_id, asset_id) -- Prevents a user from having duplicate licenses
-
+    UNIQUE (character_id, quest_id)
 );

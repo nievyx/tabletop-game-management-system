@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import Users from './components/Users';
+import Players from './components/Players.jsx';
 import Characters from "./components/Characters.jsx";
 import GalaxyBackground from "./components/backgrounds/GalaxyBackground";
 import './styles/tables.css'
@@ -58,14 +58,14 @@ function App () {
 
           {/* Backend Status Block */}
           <main className="content">
-            <section className="card">
+            <section className="">
               <h2>Backend Status</h2>
               <p>{status}</p>
               {error && <p> Error: {error}</p>}
             </section>
 
             {/* Users Block */}
-            <Users />
+            <Players />
 
           {/* Characters Block */}
           <Characters />
