@@ -7,6 +7,9 @@ venv/
 .idea
 
 .db
+.db*
+backups/*
+!backups/.gitkeep
 
 
 backend/database/app.db
