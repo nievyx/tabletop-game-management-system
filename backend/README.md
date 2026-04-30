@@ -35,7 +35,7 @@ Run database health check
 ```json
 {"ok": 1 }
 ```
-Users table check
+Players table check
 - http://127.0.0.1:8000/db-check-users-table
 - Expected response:
 ```json
@@ -61,7 +61,7 @@ backend/
 │   ├── app.db                # Ignored by git
 │   └── __init__.py 
 │
-├── api/
+├── app/
 │   ├── main.py               # FastAPI entry point
 │   ├── models.py             # Pydantic request/response schemas
 │   ├──  routes.py             # endpoints
@@ -74,11 +74,11 @@ backend/
 ```
 
 backend/
-├── api/
+├── app/
 │   ├── main.py        
 │   ├── routes/
-│   │   ├── users.py
-│   │   ├── profiles.py
+│   │   ├── players.py
+│   │   ├── profiles.py (note: moved to ./legacy)
 │   │   ├── assets.py
 │   │   └── quests.py
 │   ├── models.py

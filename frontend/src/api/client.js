@@ -40,6 +40,6 @@ export function del(endpoint) {
     });
 }
 
-export async function getUsers() {
-    return get('/users/');
+export async function getPlayers() {
+    return get('/players/');
 }

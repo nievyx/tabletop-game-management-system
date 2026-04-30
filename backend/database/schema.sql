@@ -109,7 +109,7 @@ CREATE TABLE inventory (
     UNIQUE (character_id, item_id)
 
     FOREIGN KEY (character_id) REFERENCES characters(character_id),
-    FOREIGN KEY (item_id) REFERENCES items(item_id),
+    FOREIGN KEY (item_id) REFERENCES items(item_id)
 );
 
 CREATE TABLE quests (

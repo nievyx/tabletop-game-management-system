@@ -1,6 +1,6 @@
 // CHARACTER CRUDs
 
-import {  get, post, put, del, getUsers } from '../api/client';
+import {  get, post, put, del, getPlayers } from '../api/client';
 import { useEffect, useState} from "react";
 
 
@@ -27,15 +27,15 @@ function Characters() {
         const data = await get(PREFIX);
         setCharacters(data);
     }
-    // LOAD PLAYERS ACCOUNTS (NOTE: NAMED USERS IN BACKEND)
-    async function loadUsers() {
-        const data = await getUsers();
+    // LOAD PLAYERS ACCOUNTS
+    async function loadPlayers() {
+        const data = await getPlayers();
         setPlayers(data);
     }
 
     useEffect(() => {
         loadCharacters().catch(console.error)
-        loadUsers().catch(console.error);
+        loadPlayers().catch(console.error);
     }, []);
 
     function resetForm() {
@@ -216,8 +216,8 @@ function Characters() {
                                     <option value="">Select Player account</option>
 
                                     {players.map((player) => (
-                                        <option key={player.user_id} value={player.user_id}>
-                                            {player.username ?? player.email}
+                                        <option key={player.player_id} value={player.player_id}>
+                                            {player.display_name ?? player.email}
                                         </option>
                                     ))}
                                 </select>

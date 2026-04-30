@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import Users from './components/Users';
+import Players from './components/Players.jsx';
 import Characters from "./components/Characters.jsx";
 import GalaxyBackground from "./components/backgrounds/GalaxyBackground";
 import './styles/tables.css'
@@ -65,7 +65,7 @@ function App () {
             </section>
 
             {/* Users Block */}
-            <Users />
+            <Players />
 
           {/* Characters Block */}
           <Characters />

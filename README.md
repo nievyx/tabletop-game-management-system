@@ -124,7 +124,7 @@ root/
 This prototype currently inserts a temporary placeholder value for `password_hash`.
 
 ```python
-# routes/users.py
+# routes/players.py
  
 password_hash = "TEMP_HASH"
 
