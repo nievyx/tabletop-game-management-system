@@ -16,10 +16,8 @@ DROP TABLE IF EXISTS players;
 
 CREATE TABLE players (
     player_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT NOT NULL UNIQUE
-        CHECK (length(email) <= 255),
-    display_name TEXT NOT NULL UNIQUE
-        CHECK (length(display_name) <= 100),
+    email TEXT NOT NULL UNIQUE CHECK (length(email) <= 255),
+    display_name TEXT NOT NULL UNIQUE CHECK (length(display_name) <= 100),
     password_hash TEXT NOT NULL,
     date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

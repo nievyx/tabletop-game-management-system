@@ -119,17 +119,3 @@ root/
 ```
 </details>
 
-### Developer Note: Password Placeholder
-
-This prototype currently inserts a temporary placeholder value for `password_hash`.
-
-```python
-# routes/players.py
- 
-password_hash = "TEMP_HASH"
-
-cursor = db.execute(
-    'INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)',
-    (user.username, user.email, "TEMP_HASH")
-)
-```

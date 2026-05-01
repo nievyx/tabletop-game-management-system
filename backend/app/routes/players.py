@@ -1,5 +1,6 @@
 import sqlite3
 import hashlib
+import os
 from fastapi import APIRouter, Depends, HTTPException
 
 from backend.database.db import get_db
@@ -8,7 +9,16 @@ from backend.app.models import PlayerCreate, PlayerUpdate
 router = APIRouter(prefix='/players',tags=['Players'])
 
 def hash_password(password: str) -> str:
-    return hashlib.sha256(password.encode('utf-8')).hexdigest()
+    salt = os.urandom(16)
+    hashed_password = hashlib.pbkdf2_hmac(
+        'sha256',
+        password.encode('utf-8'),
+        salt,
+        100_000
+    )
+
+    return salt.hex() + ':' + hashed_password.hex()
+
 
 # ==============================
 #  PLAYERS CRUD
@@ -18,7 +28,7 @@ def hash_password(password: str) -> str:
 
 @router.post('/')
 def create_player(player: PlayerCreate, db : sqlite3.Connection = Depends(get_db)):
-    hashed_password = hash_password(player.password_hash) # NOTE: Placeholder
+    hashed_password = hash_password(player.password_hash)
 
     cursor = db.execute(
         '''
