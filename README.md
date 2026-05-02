@@ -23,6 +23,9 @@ From the project root, run:
 docker compose up --build
 ```
 
+## Demo 
+
+![Frontend Demo](assets/demo.gif)
 ## Quick start
 
 ```bash
@@ -50,6 +53,7 @@ npm run dev
 ```
 
 
+
 ## Root File Structure
 ```
 ├── docs/
@@ -71,7 +75,7 @@ root/
 │   ├── app/
 │   │   ├── main.py
 │   │   ├── routes/
-│   │   │   ├── users.py
+│   │   │   ├── players.py
 │   │   │   ├── profiles.py
 │   │   │   ├── assets.py
 │   │   │   └── quests.py
