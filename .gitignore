@@ -6,13 +6,13 @@ database/*.db
 venv/
 .idea
 
-.db
-.db*
-backups/*
+# .db
+# .db*
+# backups/*
 !backups/.gitkeep
 
 
-backend/database/app.db
+# backend/database/app.db
 
 
 # Windows icon files
