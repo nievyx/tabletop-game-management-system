@@ -1,4 +1,4 @@
-# Databases-Assignment
+# tabletop-game-management-system
 
 Relational database + CRUD demo REST API wrapper
 
